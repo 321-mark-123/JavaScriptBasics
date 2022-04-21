@@ -1,8 +1,8 @@
 'use strict';
 let waren = [
-  ['Biren', 'Äpfel', 'Pflaumen', 'Kirschen'],
-  ['Möhren', 'Sellerie', 'Weißkohl', 'Grünkohl'],
-  ['Graubrot', 'Weißbrot', 'Knäckebrot', 'Vollkornbrot'],
+  ['Biren', 'Äpfel', 'Pflaumen', 'Kirschen'], //array[0]:[0][0],[0][1],[0][2],[0][3]
+  ['Möhren', 'Sellerie', 'Weißkohl', 'Grünkohl'], //array[1]:[1][0],[1][1],[1][2],[1][3]
+  ['Graubrot', 'Weißbrot', 'Knäckebrot', 'Vollkornbrot'], //array[2]:[2][0],[2][1],[2][2],[2][3]
 ];
 // aessere arrays
 for (let i = 0; i < waren.length; i++) {
