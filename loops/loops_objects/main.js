@@ -14,11 +14,26 @@ let my_object = {
 /**object -> array
  *
  */
+/**Object.entries long version 
 console.log('----');
 let pairs = Object.entries(my_object);
 console.log('-Objects.entries---');
 console.log(pairs);
 for (let pair of pairs) {
+  console.log('-for-of-pair---');
+  console.log(pair);
+  for (let e of pair) {
+    console.log('-for-of-pair-e--');
+    console.log(e);
+  }
+}
+*/
+/**Object.entries short version
+ */
+console.log('----');
+console.log('-Objects.entries---');
+console.log(Object.entries(my_object));
+for (let pair of Object.entries(my_object)) {
   console.log('-for-of-pair---');
   console.log(pair);
   for (let e of pair) {
@@ -37,11 +52,12 @@ John
 .....
 */
 console.log('----');
-
+/**Object.keys long version
 let properties = Object.keys(my_object);
 console.log('--Object.keys--');
 console.log(properties);
 console.log(`propertys: ${properties}`);
+*/
 /*
 (3) ['name', 'first_name', 'age']
 0: "name"
@@ -49,14 +65,23 @@ console.log(`propertys: ${properties}`);
 2: "age"
 length: 3
 */
+/**Object.keys long version
 console.log('-property-of-properties-');
 for (let p of properties) {
   console.log(p);
 }
+*/
+console.log('-property-of-properties-');
+for (let p of Object.keys(my_object)) {
+  console.log(p);
+}
+/**Object.values
+ * long version with extra variable
 console.log('-Object.values-');
 let values = Object.values(my_object);
 console.log('-values-');
 console.log(values);
+*/
 /*
 Array(3)
 0: "John"
@@ -64,7 +89,15 @@ Array(3)
 2: 22
 length: 3
 */
+/**Object.values for of loop
+ * long version with extra variable
 for (let v of values) {
+  console.log('-value-');
+  console.log(v);
+}
+*/
+//short version
+for (let v of Object.values(my_object)) {
   console.log('-value-');
   console.log(v);
 }
