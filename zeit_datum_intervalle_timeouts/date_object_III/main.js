@@ -20,4 +20,18 @@ let optionen = {
 };
 let de_DE_2 = d.toLocaleString('de-DE', optionen);
 console.log(de_DE_2);
-d.toLocaleString;
+//Datum
+let de_DE_datum = d.toLocaleDateString('de-DE', {
+  year: 'numeric', //numeric, 2 digit
+  month: 'long', //numeric, 2 digit, norrow, short, long
+  day: 'numeric', //numeric, 2-digit
+  weekday: 'long', //norrow, short, long
+});
+console.log(de_DE_datum);
+
+let de_DE_time = d.toLocaleTimeString('de-DE', {
+  hour: 'numeric',
+  minute: '2-digit',
+  second: '2-digit',
+});
+console.log(de_DE_time);
