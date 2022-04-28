@@ -2,13 +2,21 @@
 console.log(Math);
 //kreisfläche berechnen radius a=PI * r^2
 let a = Math.PI * Math.pow(12, 2); //pow(12,2) ->12^2
-console.log(a);
+console.log(`kreisfläche ${a}`);
 let a_gerundet = Math.round(a);
 console.log(`gerundet: ${a_gerundet}`);
 let a_abgerundet = Math.floor(a);
 console.log(`abgerundet: ${a_abgerundet}`);
 let a_aufgerundet = Math.ceil(a);
 console.log(`aufgerundet: ${a_aufgerundet}`);
+let a_nachkommastellen = a.toFixed(3); // return leider string
+console.log(`nachkommastellen: ${a_nachkommastellen}`);
+//string in zahlen umwandeln
+let a_integer = parseInt(a_nachkommastellen);
+console.log(`a_integer: ${a_integer}`);
+let a_float = parseFloat(a_nachkommastellen); // 3 stellen da schon to fixed durchlaufen
+console.log(`a_float: ${a_float}`);
+
 /*
 Math
 E: 2.718281828459045
