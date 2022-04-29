@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS</title>
+    <!-- ohne asynch und defnder attribut wird skript ausgeführt BEVOR Seite weiter geparsed wird -->
+    <!-- //script wird geladen und sofort ausgeführt -->
+    <!-- <script src="main.js"></script> -->
+    <!-- <script src="main.js" asynch></script> -->
+  </head>
+  <body>
+    <div id="test">Ich bin ein&lt;div&gt;-Element</div>
+    <!-- skript wird erst ausgeführt wenn Seite vollständig geparsed wurde
+    trotzdem kann es ratsam sein ,Skripte erst direkt vor dem </body>bodyTag einzubinden -->
+    <script src="main.js" defer></script>
+  </body>
+</html>

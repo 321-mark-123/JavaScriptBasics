@@ -1,5 +1,5 @@
 'use strict';
-//  this in einem Object  auf sich indizieren
+//  this refernziert das Objekt in dessen Kontext es aufgerufen wird
 
 let person_1 = {
   vorname: 'vorname',
@@ -10,6 +10,8 @@ let person_1 = {
   },
 };
 person_1.meine_methode_1();
+// durch nutzung von this inerhalb einer function fällt das this aus dem Kontext
+// strict mode = undefined ohne strict bezieht es sich dann auf das window objekt
 //!!! this fällt aus dem Kontext!!!
 let person_2 = {
   vorname: 'vorname',
