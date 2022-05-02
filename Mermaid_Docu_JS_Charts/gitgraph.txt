@@ -1,0 +1,926 @@
+https://mermaid-js.github.io/mermaid/#/gitgraph
+
+Gitgraph-Diagramme
+Bearbeite diese Seite N|Fest
+
+Ein Git-Graph ist eine bildliche Darstellung von Git-Commits und Git-Aktionen (Befehlen) auf verschiedenen Branches.
+
+Diese Art von Diagramm ist besonders hilfreich für Entwickler und Entwicklungsteams, um ihre Git-Branching-Strategien zu teilen. So lässt sich beispielsweise leichter visualisieren, wie Git-Flow funktioniert.
+
+Mermaid kann Git-Diagramme rendern
+
+    gitGraph Commit Commit        Branch  Entwickeln Checkout  Entwickeln Commit Commit Checkout  Main Merge  Entwickeln Commit Commit
+       
+       
+
+       
+       
+       
+       
+       
+       
+       
+main
+develop
+0-c3db054
+1-00f8cfc
+2-62bc0af
+3-0a22ad1
+5-75f3242
+6-630ffbf
+In Mermaid unterstützen wir die grundlegenden Git-Operationen wie:
+
+commit : Stellt ein neues Commit im aktuellen Zweig dar.
+Verzweigung : Um eine neue Verzweigung zu erstellen und zu ihr zu wechseln und sie als aktuelle Verzweigung festzulegen.
+checkout : Um einen bestehenden Zweig auszuchecken und ihn als aktuellen Zweig festzulegen.
+merge : Um einen bestehenden Branch mit dem aktuellen Branch zusammenzuführen.
+Mit Hilfe dieser wichtigen Git-Befehle können Sie sehr einfach und schnell einen Gitgraph in Mermaid zeichnen. Entitätsnamen werden oft groß geschrieben, obwohl es dafür keinen anerkannten Standard gibt und dies in Mermaid nicht erforderlich ist.
+
+Syntax
+Die Mermaid-Syntax für Gitgraph ist sehr geradlinig und einfach. Es folgt einem deklarativen Ansatz, bei dem jeder Commit auf der Zeitachse im Diagramm gezeichnet wird, in der Reihenfolge seines Auftretens/Vorhandenseins im Code. Grundsätzlich folgt es der Einfügungsreihenfolge für jeden Befehl.
+
+Als erstes deklarieren Sie Ihren Diagrammtyp mit dem Schlüsselwort gitgraph . Dieses gitgraphSchlüsselwort teilt Mermaid mit, dass Sie einen Gitgraph zeichnen und den Diagrammcode entsprechend analysieren möchten.
+
+Jeder Gitgraph wird mit dem Hauptzweig initialisiert . Wenn Sie also keinen anderen Zweig erstellen, gehen die Commits standardmäßig zum Hauptzweig. Dies wird durch die Funktionsweise von Git gesteuert, wobei Sie zunächst immer mit dem Hauptzweig (früher als Master- Zweig bezeichnet) beginnen. Und standardmäßig ist mainbranch als Ihr aktueller Branch festgelegt .
+
+Sie verwenden das Commit -Schlüsselwort, um ein Commit im aktuellen Zweig zu registrieren. Mal sehen, wie das funktioniert:
+
+Ein einfacher Gitgraph, der drei Commits auf dem Standardzweig ( main ) zeigt:
+
+    gitGraph Commit Commit Commit
+       
+       
+       
+main
+0-6693173
+1-3eb4282
+2-b4816f4
+Wenn Sie sich das vorherige Beispiel genau ansehen, können Sie den Standard-Zweig mainzusammen mit drei Commits sehen. Beachten Sie auch, dass jedem Commit standardmäßig eine eindeutige und zufällige ID zugewiesen wurde. Was ist, wenn Sie einem Commit Ihre eigene benutzerdefinierte ID geben möchten? Ja, das ist mit Mermaid möglich.
+
+Hinzufügen einer benutzerdefinierten Commit-ID
+Für ein bestimmtes Commit können Sie zum Zeitpunkt der Deklaration eine benutzerdefinierte ID angeben, indem Sie das idAttribut verwenden, gefolgt von :und Ihrem benutzerdefinierten Wert in ""Anführungszeichen. Zum Beispiel:commit id: "your_custom_id"
+
+Sehen wir uns anhand des folgenden Diagramms an, wie das funktioniert:
+
+    gitGraph Commit - ID :  „Alpha“ Commit - ID :  „Beta“ Commit - ID :  „Gamma“
+        
+        
+        
+main
+Alpha
+Beta
+Gamma
+In diesem Beispiel haben wir den Commits unsere benutzerdefinierten IDs gegeben.
+
+Commit-Typ ändern
+In Mermaid kann ein Commit von drei Typen sein, die im Diagramm etwas anders dargestellt werden. Diese Typen sind:
+
+NORMAL: Standard-Commit-Typ. Im Diagramm durch einen ausgefüllten Kreis dargestellt
+REVERSE: Um einen Commit als umgekehrten Commit hervorzuheben. Dargestellt durch einen gekreuzten durchgezogenen Kreis im Diagramm.
+HIGHLIGHT: Um einen bestimmten Commit im Diagramm hervorzuheben. Im Diagramm durch ein gefülltes Rechteck dargestellt.
+Für ein bestimmtes Commit können Sie seinen Typ zum Zeitpunkt der Deklaration mit dem typeAttribut angeben, gefolgt von :und der oben beschriebenen erforderlichen Typoption. Zum Beispiel:commit type: HIGHLIGHT
+
+HINWEIS: Wenn kein Commit-Typ angegeben ist, NORMALwird dieser als Standard ausgewählt.
+
+Lassen Sie uns mit Hilfe des folgenden Diagramms sehen, wie diese verschiedenen Commit-Typen aussehen:
+
+    gitGraph Commit - ID :  „Normal“ Commit Commit - ID :  „Reverse“ Typ :  REVERSE Commit Commit - ID :  „Highlight“ Typ :  HIGHLIGHT Commit
+        
+       
+         
+       
+         
+       
+main
+Normal
+1-5a01c7f
+Reverse
+3-f4771e4
+Highlight
+5-f812250
+In diesem Beispiel haben wir für jeden Commit unterschiedliche Typen angegeben. Sehen Sie sich auch an, wie wir zum Zeitpunkt der Deklaration unserer Verpflichtungen beide idund zusammen in eine Keule geschlagen haben.type
+
+Tags hinzufügen
+Für ein bestimmtes Commit können Sie es als Tag dekorieren , ähnlich dem Konzept von Tags oder Release-Versionen in der Git-Welt. Sie können zum Zeitpunkt der Deklaration eines Commits ein benutzerdefiniertes Tag anhängen, indem Sie das tagAttribut verwenden, gefolgt von :und Ihrem benutzerdefinierten Wert in ""Anführungszeichen. Zum Beispiel:commit tag: "your_custom_tag"
+
+Sehen wir uns anhand des folgenden Diagramms an, wie das funktioniert:
+
+    gitGraph Commit Commit - ID :  „Normal“ Tag :  „v1.0.0“ Commit Commit - ID :  „Reverse“ Typ :  REVERSE Tag :  „RC_1“ Commit Commit - ID :  „Highlight“ Typ :  HIGHLIGHT Tag :  „8.8.4“ Commit
+       
+         
+       
+          
+       
+          
+       
+main
+0-9d4356f
+Normal
+v1.0.0
+2-f2663b1
+Reverse
+RC_1
+4-3cab3f8
+Highlight
+8.8.4
+6-71fafc2
+In diesem Beispiel haben wir den Commits benutzerdefinierte Tags gegeben. Sehen Sie sich auch an, wie wir all diese Attribute in einer einzigen Commit-Deklaration kombiniert haben. Sie können diese Attribute beliebig kombinieren.
+
+Erstellen Sie einen neuen Zweig
+branchIn Mermaid verwenden Sie das Schlüsselwort , um einen neuen Zweig zu erstellen . Sie müssen auch einen Namen für den neuen Zweig angeben. Der Name muss eindeutig sein und darf nicht der einer bestehenden Filiale sein. Anwendungsbeispiel:branch develop
+
+Wenn Mermaid das Schlüsselwort liest branch, erstellt es einen neuen Zweig und legt ihn als aktuellen Zweig fest. Entspricht dem Erstellen eines neuen Zweigs und dem Auschecken in der Git-Welt.
+
+Sehen wir uns das an einem Beispiel an:
+
+    gitGraph Commit Commit        Branch Commit Commit Commit  entwickeln
+       
+       
+
+       
+       
+       
+main
+develop
+0-81868c0
+1-336e484
+2-244c4c4
+3-57fce0b
+4-9c7bd61
+Sehen Sie sich in diesem Beispiel an, wie wir mit dem Standard- mainBranch begonnen und darauf zu Commits gepusht haben. Dann haben wir die developVerzweigung erstellt, und alle nachfolgenden Commits werden auf die developVerzweigung gelegt, da sie zur aktuellen Verzweigung wurde.
+
+Auschecken einer bestehenden Filiale
+checkoutIn Mermaid verwenden Sie das Schlüsselwort , um zu einem bestehenden Zweig zu wechseln . Sie müssen auch den Namen einer bestehenden Filiale angeben. Wenn kein Zweig mit dem angegebenen Namen gefunden wird, führt dies zu einem Konsolenfehler. Anwendungsbeispiel:checkout develop
+
+Wenn Mermaid das Schlüsselwort liest checkout, findet es den angegebenen Zweig und legt ihn als aktuellen Zweig fest. Entspricht dem Auschecken eines Zweigs in der Git-Welt.
+
+Lassen Sie uns unser vorheriges Beispiel ändern:
+
+    gitGraph Commit Commit -        Zweig Commit Commit Commit Checkout  Main Commit Commit  entwickeln
+       
+       
+
+       
+       
+       
+       
+       
+       
+main
+develop
+0-89cbbc3
+1-b10cc41
+2-361ffaa
+3-ee40f6b
+4-9b1fa3a
+5-4f339e9
+6-ec4e2f4
+Sehen Sie sich in diesem Beispiel an, wie wir mit dem Standard- mainBranch begonnen und darauf zu Commits gepusht haben. Dann haben wir den developBranch erstellt, und alle drei Commits werden danach auf den developBranch gelegt, da er zum aktuellen Branch wurde. Danach haben wir das checkoutSchlüsselwort verwendet, um den aktuellen Zweig als mainfestzulegen, und alle folgenden Festschreibungen werden gegen den aktuellen Zweig registriert, dh main.
+
+Zusammenlegung zweier Filialen
+mergeIn Mermaid verwenden Sie das Schlüsselwort , um mit einem bestehenden Zweig zusammenzuführen oder ihm beizutreten . Sie müssen auch einen Namen eines bestehenden Zweigs angeben, aus dem zusammengeführt werden soll. Wenn kein Zweig mit dem angegebenen Namen gefunden wird, führt dies zu einem Konsolenfehler. Auch, wenn Sie nur zwei separate Zweige zusammenführen können und einen Zweig nicht mit sich selbst zusammenführen können. In einem solchen Fall wird ein Fehler geworfen.
+
+Anwendungsbeispiel:merge develop
+
+Wenn Mermaid das Schlüsselwort liest merge, findet es den angegebenen Branch und seinen Head-Commit (den letzten Commit auf diesem Branch) und verbindet ihn mit dem Head-Commit auf dem aktuellen Branch . Jede Zusammenführung führt zu einem Zusammenführungs - Commit , der im Diagramm durch einen gefüllten Doppelkreis dargestellt wird .
+
+Lassen Sie uns unser vorheriges Beispiel ändern, um unsere beiden Zweige zusammenzuführen:
+
+    gitGraph Commit Commit -        Zweig Commit Commit  entwickeln Commit Checkout  Haupt- Commit Commit Merge Commit  entwickeln Commit
+       
+       
+
+       
+       
+       
+       
+       
+       
+       
+       
+       
+main
+develop
+0-ba09d79
+1-b9336f8
+2-7065feb
+3-be82e10
+4-3348608
+5-f6aef1d
+6-80cfbd5
+8-dc4ce14
+9-1e8d931
+Sehen Sie sich in diesem Beispiel an, wie wir mit dem Standard- mainBranch begonnen und darauf zu Commits gepusht haben. Dann haben wir den developBranch erstellt, und alle drei Commits werden danach auf den developBranch gelegt, da er zum aktuellen Branch wurde. Danach haben wir das checkoutSchlüsselwort verwendet, um den aktuellen Zweig als mainfestzulegen, und alle folgenden Festschreibungen werden gegen den aktuellen Zweig registriert, dh main. Danach führen wir den developBranch mit dem aktuellen Branch mainzusammen, was zu einem Merge-Commit führt. Da der aktuelle Zweig zu diesem Zeitpunkt immer noch ist main, werden die letzten beiden Commits dagegen registriert.
+
+Gitgraph-spezifische Konfigurationsoptionen
+In Mermaid haben Sie die Möglichkeit, das Gitgraph-Diagramm zu konfigurieren. Sie können die folgenden Optionen konfigurieren:
+
+showBranches: Boolesch, Standard ist true. Bei Einstellung auf falsewerden die Zweige nicht im Diagramm angezeigt.
+showCommitLabel: Boolesch, Standard ist true. Wenn auf gesetzt false, werden die Commit-Labels nicht im Diagramm angezeigt.
+mainBranchName: Zeichenkette, Standard ist main. Der Name des Standard-/Stammzweigs.
+Schauen wir sie uns nacheinander an.
+
+Ausblenden von Zweignamen und -linien
+Manchmal möchten Sie vielleicht die Zweignamen und Linien aus dem Diagramm ausblenden. Sie können dies tun, indem Sie das showBranchesSchlüsselwort verwenden. Standardmäßig ist der Wert true. Sie können es mit Direktiven auf false setzen
+
+Anwendungsbeispiel:
+
+%% { init :  { 'logLevel' :  'debug' ,  'theme' :  'base' ,  'gitGraph' :  { 'showBranches' :  false }} } %%   
+      gitGraph Commit -         Branch  Hotfix Checkout  Hotfix Commit -         Branch Develop Checkout  Commit - ID  entwickeln : "Asche" -Tag : "abc"        branch  featureB checkout  featureB Commit -Typ
+        
+
+        
+        
+
+        
+          
+
+        
+         : HIGHLIGHT Checkout  Main Checkout  Hotfix Commit -Typ : NORMAL Checkout  Entwicklung Commit -Typ : REVERSE Checkout  FeatureB Commit Checkout  Main Merge  Hotfix Checkout  FeatureB Commit Checkout         Zweig  entwickeln  FeatureA Commit Checkout  Entwicklung Merge  Hotfix Checkout  FeatureA Commit Checkout  FeatureB Commit Checkout  Entwicklung
+        
+        
+         
+        
+         
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        Merge  -FeatureA- 
+        Zweig  Release Checkout  Release Commit Checkout  Main Commit Checkout  Release Merge  Main Checkout  Entwickeln Merge  Release
+        
+        
+        
+        
+        
+        
+        
+        
+0-a1bc2d5
+1-1e329f4
+ash
+abc
+3-dd30247
+4-13f5c5f
+5-a283f39
+6-561d46f
+8-7d18d8e
+9-85b5afa
+11-27f6f40
+12-2be2d7a
+14-3ccb511
+15-2f22b2e
+Commit-Labels ausblenden
+Manchmal möchten Sie vielleicht die Commit-Labels aus dem Diagramm ausblenden. Sie können dies tun, indem Sie das showCommitLabelSchlüsselwort verwenden. Standardmäßig ist sein Wert true. Sie können es so einstellen, dass es falseDirektiven verwendet.
+
+Anwendungsbeispiel:
+
+%% { init :  { 'logLevel' :  'debug' ,  'theme' :  'base' ,  'gitGraph' :  { 'showBranches' :  false , 'showCommitLabel' :  false }} } %%   
+      gitGraph Commit         Branch  Hotfix Checkout  Hotfix Commit         Verzweigung  entwickeln Checkout  entwickeln Commit -ID : "ash"        Verzweigung  featureB checkout  featureB
+        
+
+        
+        
+
+        
+         
+
+        
+        Commit -Typ : HIGHLIGHT  Checkout  Main Checkout  Hotfix Commit -Typ : NORMAL Checkout  entwickeln Commit -Typ : REVERSE Checkout  FeatureB Commit Checkout  Main Merge  Hotfix Checkout  FeatureB Commit Checkout         Branch  entwickeln  FeatureA Commit Checkout  Entwickeln Merge  Hotfix Checkout  FeatureA Commit Checkout  FeatureB Commit
+        
+        
+         
+        
+         
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        Checkout  entwickeln Merge  -FunktionEin         Zweig  Release Checkout  Release Commit Checkout  Main Commit Checkout  Release Merge  Main Checkout  Development Merge  Release
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+Anpassen des Haupt-/Standardzweignamens
+Manchmal möchten Sie vielleicht den Namen des Haupt-/Standardzweigs anpassen. Sie können dies tun, indem Sie das mainBranchNameSchlüsselwort verwenden. Standardmäßig ist sein Wert main. Sie können es mit Direktiven auf eine beliebige Zeichenfolge setzen.
+
+Anwendungsbeispiel:
+
+%% { init :  { 'logLevel' :  'debug' ,  'theme' :  'base' ,  'gitGraph' :  { 'showBranches' :  true ,  'showCommitLabel' : true , 'mainBranchName' :  'MetroLine1' }} } % %   
+      gitGraph Commit - ID : „NewYork“ Commit - ID : „Dallas“         -Zweig  MetroLine2 Commit - ID : „LosAngeles" Commit - ID
+         
+         
+
+         
+         : „Chicago“ Commit - ID : „Houston“         Zweig  MetroLine3 Commit - ID : „Phoenix“ Commit -Typ :  HIGHLIGHT - ID : „Denver“ Commit - ID : „Boston“ Checkout  MetroLine1 Commit - ID : „Atlanta“ Merge  MetroLine3 Commit - ID : „Miami“ Commit id : "Washington" Merge  MetroLine2 commit id : "Boston"begehen
+         
+
+         
+          
+         
+        
+         
+        
+         
+         
+        
+         
+         id : "Detroit" Commit -Typ : REVERSE id : "SanFrancisco"
+          
+MetroLine1
+MetroLine2
+MetroLine3
+NewYork
+Dallas
+LosAngeles
+Chicago
+Houston
+Phoenix
+Denver
+Atlanta
+Miami
+Washington
+Boston
+Detroit
+SanFrancisco
+Schaut sich die imaginäre Eisenbahnkarte an, die mit dieser Meerjungfrau erstellt wurde. Hier haben wir den standardmäßigen Hauptzweignamen in geändert MetroLine1.
+
+Themen
+Mermaid unterstützt eine Reihe vordefinierter Themen, mit denen Sie das richtige für sich finden können. PS: Sie können tatsächlich die Variable eines vorhandenen Themas überschreiben, um Ihr eigenes benutzerdefiniertes Thema zum Laufen zu bringen. Erfahren Sie hier mehr über die Thematisierung Ihres Diagramms .
+
+Im Folgenden sind die verschiedenen vordefinierten Themenoptionen aufgeführt:
+
+base
+forest
+dark
+default
+neutral
+HINWEIS : Um das Thema zu ändern, können Sie entweder den initializeAufruf oder die Direktiven verwenden . Erfahren Sie mehr über Direktiven Lassen Sie uns sie anwenden und sehen Sie, wie unser Beispieldiagramm in verschiedenen Themen aussieht:
+
+Basisthema
+%% { init :  { 'logLevel' :  'debug' ,  'theme' :  'base' } } %%    
+      gitGraph Commit -         Branch  Hotfix Checkout  Hotfix Commit -         Branch  Develop Checkout  Develop Commit - ID : "ash" Tag : "abc"         Branch  FeatureB Checkout  FeatureB - Commit -Typ : HIGHLIGHT - Checkout  -Hauptcheckout  - Hotfix
+        
+
+        
+        
+
+        
+          
+
+        
+         
+        
+        
+        Commit -Typ : NORMAL  Checkout  entwickeln Commit - Typ : REVERSE Checkout  FeatureB Commit Checkout  Main Merge  Hotfix Checkout  FeatureB Commit Checkout         Branch  entwickeln  FeatureA Commit Checkout Merge  Hotfix Checkout  FeatureA Commit Checkout  FeatureB Commit Checkout Merge  FeatureA  Branch  Release         Checkout  entwickeln
+        
+         
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+         Release Commit Checkout  Main Commit Checkout  Release Zusammenführen  Main Checkout  Entwickeln Merge  Release
+        
+        
+        
+        
+        
+        
+        
+main
+hotfix
+develop
+featureB
+featureA
+release
+0-83fd57b
+1-c35ece8
+ash
+abc
+3-03cae46
+4-8070fab
+5-2e7da04
+6-b3a896e
+8-8819980
+9-deceef2
+11-f17b251
+12-6e04ca7
+14-d5cb6a2
+15-06d4999
+Thema Wald
+%% { init :  { 'logLevel' :  'debug' ,  'theme' :  'forest' } } %%    
+      gitGraph Commit         Branch  Hotfix Checkout  Hotfix Commit         Branch  Develop Checkout  Develop Commit ID : "ash" Tag : "abc"         Branch  FeatureB Checkout  FeatureB - Commit -Typ : HIGHLIGHT - Checkout  -Hauptcheckout  - Hotfix
+        
+
+        
+        
+
+        
+          
+
+        
+         
+        
+        
+        Commit -Typ : NORMAL  Checkout  entwickeln Commit - Typ : REVERSE Checkout  FeatureB Commit Checkout  Main Merge  Hotfix Checkout  FeatureB Commit Checkout         Branch  entwickeln  FeatureA Commit Checkout Merge  Hotfix Checkout  FeatureA Commit Checkout  FeatureB Commit Checkout Merge  FeatureA  Branch  Release         Checkout  entwickeln
+        
+         
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+         Release Commit Checkout  Main Commit Checkout  Release Zusammenführen  Main Checkout  Entwickeln Merge  Release
+        
+        
+        
+        
+        
+        
+        
+main
+hotfix
+develop
+featureB
+featureA
+release
+0-dadbf84
+1-ed0ec32
+ash
+abc
+3-2a42b39
+4-6d9cfbc
+5-637bd1c
+6-f5ffa9a
+8-4921f20
+9-3592446
+11-1ecd993
+12-0fe4e97
+14-ac5ea95
+15-bc773a6
+Standardthema
+%% { init :  { 'logLevel' :  'debug' ,  'theme' :  'default' } } %%    
+      gitGraph Commit -Typ : HIGHLIGHT -         Zweig  Hotfix Checkout  Hotfix Commit -         Zweig  Entwickeln Checkout  Entwickeln Commit - ID : "ash" Tag : "abc"         Branch  FeatureB Checkout  FeatureB Commit -Typ : HIGHLIGHT Checkout
+         
+
+        
+        
+
+        
+          
+
+        
+         
+         Hauptcheckout  Hotfix Committyp : NORMAL Checkout  entwickeln Committyp : REVERSE Checkout  FeatureB Commit Checkout  Main Merge  Hotfix Checkout  FeatureB Commit Checkout         Zweig  entwickeln  FeatureA Commit Checkout  entwickeln Merge  Hotfix Checkout  FeatureA Commit Checkout  FeatureB Commit Checkout Merge  FeatureA  entwickeln _ _ _
+        
+         
+        
+         
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        Verzweigung  Freigabe Kasse  Freigabe Commit Kasse  Haupt Commit Kasse  Freigabe Zusammenführung  Haupt Kasse  Entwickeln Zusammenführung  Freigabe
+        
+        
+        
+        
+        
+        
+        
+        
+main
+hotfix
+develop
+featureB
+featureA
+release
+0-511a03f
+1-2312e38
+ash
+abc
+3-6065f45
+4-d4e070c
+5-54e6bb1
+6-c92559c
+8-6cf7093
+9-9cb55bb
+11-373d5db
+12-ecdc6e9
+14-e5ee3ab
+15-3953efe
+Dunkles Thema
+%% { init :  { 'logLevel' :  'debug' ,  'theme' :  'dark' } } %%    
+      gitGraph Commit -         Branch  Hotfix Checkout  Hotfix Commit -         Branch  Develop Checkout  Develop Commit - ID : "ash" Tag : "abc"         Branch  FeatureB Checkout  FeatureB - Commit -Typ : HIGHLIGHT - Checkout  -Hauptcheckout  - Hotfix
+        
+
+        
+        
+
+        
+          
+
+        
+         
+        
+        
+        Commit -Typ : NORMAL  Checkout  entwickeln Commit - Typ : REVERSE Checkout  FeatureB Commit Checkout  Main Merge  Hotfix Checkout  FeatureB Commit Checkout         Branch  entwickeln  FeatureA Commit Checkout Merge  Hotfix Checkout  FeatureA Commit Checkout  FeatureB Commit Checkout Merge  FeatureA  Branch  Release         Checkout  entwickeln
+        
+         
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+         Release Commit Checkout  Main Commit Checkout  Release Zusammenführen  Main Checkout  Entwickeln Merge  Release
+        
+        
+        
+        
+        
+        
+        
+main
+hotfix
+develop
+featureB
+featureA
+release
+0-2bf61f7
+1-4b9fe56
+ash
+abc
+3-265de3f
+4-d3c4a26
+5-569bc3f
+6-ae388ca
+8-8da1476
+9-2c7c0e9
+11-c1c63f6
+12-36b86d0
+14-06affa4
+15-3788fdb
+Neutrales Thema
+%% { init :  { 'logLevel' :  'debug' ,  'theme' :  'neutral' } } %%    
+      gitGraph Commit         Branch  Hotfix Checkout  Hotfix Commit         Branch  Develop Checkout  Develop Commit ID : "ash" Tag : "abc"         Branch  FeatureB Checkout  FeatureB - Commit -Typ : HIGHLIGHT - Checkout  -Hauptcheckout  - Hotfix
+        
+
+        
+        
+
+        
+          
+
+        
+         
+        
+        
+        Commit -Typ : NORMAL  Checkout  entwickeln Commit - Typ : REVERSE Checkout  FeatureB Commit Checkout  Main Merge  Hotfix Checkout  FeatureB Commit Checkout         Branch  entwickeln  FeatureA Commit Checkout Merge  Hotfix Checkout  FeatureA Commit Checkout  FeatureB Commit Checkout Merge  FeatureA  Branch  Release         Checkout  entwickeln
+        
+         
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+         Release Commit Checkout  Main Commit Checkout  Release Zusammenführen  Main Checkout  Entwickeln Merge  Release
+        
+        
+        
+        
+        
+        
+        
+main
+hotfix
+develop
+featureB
+featureA
+release
+0-0297b63
+1-74e14e0
+ash
+abc
+3-2ef8986
+4-dff2944
+5-9474d87
+6-4eeebfa
+8-1a3e3f8
+9-63866c7
+11-b3f5568
+12-d5f8c1e
+14-ca8ba51
+15-2cae731
+Anpassen mit Designvariablen
+Mit Mermaid können Sie Ihr Diagramm mithilfe von Themenvariablen anpassen, die das Erscheinungsbild verschiedener Elemente des Diagramms bestimmen.
+
+Nehmen wir zum Verständnis ein Beispieldiagramm mit theme default, die Standardwerte der Theme-Variablen werden automatisch aus dem Theme übernommen. Später werden wir sehen, wie die Standardwerte der Themenvariablen überschrieben werden.
+
+Sehen Sie, wie das Standardthema verwendet wird, um die Farben für die Zweige festzulegen:
+
+%% { init :  { 'logLevel' :  'debug' ,  'theme' :  'default' } } %%    
+       gitGraph Commit -        Verzweigung Commit -Tag  entwickeln : "v1.0.0" Commit Checkout  Main Commit - Typ :  HIGHLIGHT Commit Merge Commit -        Branch  entwickeln  FeatureA begehen
+       
+
+        
+       
+       
+        
+       
+       
+       
+
+       
+main
+develop
+featureA
+0-29511bc
+1-202095b
+v1.0.0
+2-a798e01
+3-e63db35
+4-fa48f61
+6-1af2f6e
+7-88de191
+Zweigfarben anpassen
+Sie können die Zweigfarben mit den git0to git7theme-Variablen anpassen. Mit Mermaid können Sie die Farben für bis zu 8 Zweige festlegen, wobei die git0Variable den Wert des ersten Zweigs git1steuert, den Wert des zweiten Zweigs steuert und so weiter.
+
+HINWEIS: Standardwerte für diese Themenvariablen werden aus dem ausgewählten Thema ausgewählt. Wenn Sie die Standardwerte überschreiben möchten, können Sie den initializeAufruf verwenden, um Ihre benutzerdefinierten Themenvariablenwerte hinzuzufügen.
+
+Beispiel:
+
+Lassen Sie uns nun die Standardwerte für die git0to - git3Variablen überschreiben:
+
+    %% { init :  { 'logLevel' :  'debug' ,  'theme' :  'default'  ,  'themeVariables' :  {  'git0' :  '#ff0000' , 'git1' :  '#00ff00' , 'git2' :  ' #0000ff' , 'git3' :  '#ff00ff' , 'git4' :  '#00ffff' , 'git5' :  '#ffff00' , 'git6' :  '#ff00ff', 'git7' :  '#00ffff' } }
+              
+              
+              
+              
+              
+              
+              
+              
+         } %% 
+       gitGraph Commit -        Zweig Commit -Tag  entwickeln : „v1.0.0“ Commit Checkout  Haupt- Commit - Typ :  HIGHLIGHT Commit Merge Commit -        Zweig  entwickeln  FeatureA Commit
+       
+
+        
+       
+       
+        
+       
+       
+       
+
+       
+
+main
+develop
+featureA
+0-a19e5ab
+1-6d0c558
+v1.0.0
+2-36da73c
+3-f2be545
+4-dfe00bc
+6-104c179
+7-9e71258
+Sehen Sie, wie die Zweigfarben auf die in den Themenvariablen angegebenen Werte geändert werden.
+
+Anpassen der Farben der Zweigetiketten
+Sie können die Farben der Verzweigungsbeschriftungen mithilfe der Variablen gitBranchLabel0zum gitBranchLabel7Thema anpassen. Mit Mermaid können Sie die Farben für bis zu 8 Zweige festlegen, wobei die gitBranchLabel0Variable den Wert des ersten Zweiglabels steuert, gitBranchLabel1den Wert des zweiten Zweiglabels steuert und so weiter.
+
+Sehen wir uns an, wie das Standarddesign verwendet wird, um die Farben für die Zweigbeschriftungen festzulegen:
+
+Lassen Sie uns nun die Standardwerte für die gitBranchLabel0to - gitBranchLabel2Variablen überschreiben:
+
+    %% { init :  { 'logLevel' :  'debug' ,  'theme' :  'default'  ,  'themeVariables' :  {  'gitBranchLabel0' :  '#ff0000' , 'gitBranchLabel1' :  '#00ff00' , 'gitBranchLabel2' :  ' #0000ff' } } } %%        gitGraph Commit -        Zweig Commit -Tag  entwickeln : "v1.0.0"Commit Checkout  Haupt- Commit - Typ :  HIGHLIGHT
+              
+              
+              
+         
+
+       
+
+        
+       
+       
+        
+       Commit Merge Commit        Branch  entwickeln  FeatureA Commit
+       
+       
+
+       
+
+main
+develop
+featureA
+0-a94733b
+1-2151a6d
+v1.0.0
+2-bbaf99c
+3-e7d3487
+4-12dee72
+6-2e9c477
+7-2d70f32
+Sehen Sie, wie die Farben der Zweigbeschriftungen auf die in den Themenvariablen angegebenen Werte geändert werden.
+
+Commit-Farben anpassen
+Sie können Commit mithilfe der Variablen commitLabelColorund commitLabelBackgroundtheme für Änderungen in der Farbe der Commit-Beschriftung bzw. der Hintergrundfarbe anpassen.
+
+Beispiel: Lassen Sie uns nun die Standardwerte für die commitLabelColorto - commitLabelBackgroundVariablen überschreiben:
+
+    %% { init :  { 'logLevel' :  'debug' ,  'theme' :  'default'  ,  'themeVariables' :  {  'commitLabelColor' :  '#ff0000' , 'commitLabelBackground' :  '#00ff00' } } } %%        gitGraph Commit -        Zweig Commit -Tag  entwickeln : „v1.0.0“ Commit - Checkout  Haupt- Commit - Typ : HIGHLIGHT Commit Merge  entwickeln
+              
+              
+         
+
+       
+
+        
+       
+       
+        
+       
+       
+       Commit - 
+       Branch  -FeatureEin Commit
+       
+
+main
+develop
+featureA
+0-31435ba
+1-a1f1b68
+v1.0.0
+2-735d2e0
+3-2e0fd97
+4-83f621c
+6-0feddb7
+7-6bcaa24
+Sehen Sie, wie die Farbe der Commit-Beschriftung und die Hintergrundfarbe auf die in den Designvariablen angegebenen Werte geändert werden.
+
+Tag-Farben anpassen
+Sie können das Tag mithilfe der Variablen tagLabelColor, tagLabelBackgroundund tagLabelBorder theme anpassen, um die Farbe der Tag-Beschriftung, die Hintergrundfarbe der Tag-Beschriftung und den Rand der Tag-Beschriftung zu ändern. Beispiel: Lassen Sie uns nun die Standardwerte für die Variablen tagLabelColor, tagLabelBackgroundund to überschreiben:tagLabelBorder
+
+    %% { init :  { 'logLevel' :  'debug' ,  'theme' :  'default'  ,  'themeVariables' :  {  'tagLabelColor' :  '#ff0000' , 'tagLabelBackground' :  '#00ff00' , 'tagLabelBorder' :  ' #0000ff' } } } %%        gitGraph Commit -        Zweig Commit -Tag  entwickeln : "v1.0.0"Commit Checkout  Haupt- Commit - Typ :  HIGHLIGHT
+              
+              
+              
+         
+
+       
+
+        
+       
+       
+        
+       Commit Merge Commit        Branch  entwickeln  FeatureA Commit
+       
+       
+
+       
+
+main
+develop
+featureA
+0-d4b77cf
+1-e621e3a
+v1.0.0
+2-cd26aab
+3-c2de76c
+4-29ef524
+6-c37112c
+7-e4021e2
+Sehen Sie, wie die Tag-Farben auf die in den Designvariablen angegebenen Werte geändert werden.
+
+Anpassen der Commit-Farben hervorheben
+Sie können die Hervorhebungs-Commit-Farben in Bezug auf den Zweig anpassen, auf dem sie sich befinden, indem Sie die gitInv0to gitInv7theme-Variablen verwenden. Mit Mermaid können Sie die Farben für bis zu 8 branchspezifische Highlight-Commits festlegen, wobei die gitInv0Variable den Wert der Highlight-Commits des ersten Branch steuert, gitInv1den Wert des Highlight-Commit-Labels des zweiten Branch steuert und so weiter.
+
+Beispiel:
+
+Lassen Sie uns nun die Standardwerte für die git0to - git3Variablen überschreiben:
+
+    %% { init :  { 'logLevel' :  'debug' ,  'theme' :  'default'  ,  'themeVariables' :  {  'gitInv0' :  '#ff0000' } } } %%        gitGraph Commit        Branch  Develop Commit Tag : "v1. 0.0" Commit Checkout  Haupt- Commit - Typ :  HIGHLIGHT Commit Merge Commit        Branch  FeatureA Commit  entwickeln
+              
+         
+
+       
+
+        
+       
+       
+        
+       
+       
+       
+
+       
+
+main
+develop
+featureA
+0-7030648
+1-c42a896
+v1.0.0
+2-3029154
+3-b6b89ed
+4-c091be5
+6-36db832
+7-b3a437f
+Sehen Sie, wie die Hervorhebungs-Commit-Farbe auf dem ersten Zweig auf den Wert geändert wird, der in der Themenvariable angegeben ist gitInv0.

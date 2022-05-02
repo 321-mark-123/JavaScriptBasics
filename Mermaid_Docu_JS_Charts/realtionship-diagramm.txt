@@ -1,0 +1,234 @@
+Entity-Relationship-Diagramme
+Bearbeite diese Seite N|Fest
+
+Ein Entity-Relationship-Modell (oder ER-Modell) beschreibt zusammenhängende Dinge von Interesse in einem bestimmten Wissensbereich. Ein grundlegendes ER-Modell besteht aus Entitätstypen (die die interessierenden Dinge klassifizieren) und spezifiziert Beziehungen, die zwischen Entitäten (Instanzen dieser Entitätstypen) bestehen können. Wikipedia.
+
+Beachten Sie, dass Praktiker der ER-Modellierung Entitätstypen fast immer einfach als Entitäten bezeichnen . Beispielsweise würde der CUSTOMEREntitätstyp einfach als Entität bezeichnet . CUSTOMERDies ist so üblich, dass es nicht ratsam wäre, etwas anderes zu tun, aber technisch gesehen ist eine Entität eine abstrakte Instanz eines Entitätstyps, und das zeigt ein ER-Diagramm – abstrakte Instanzen und die Beziehungen zwischen ihnen. Aus diesem Grund werden Entitäten immer mit Substantiven im Singular benannt.
+
+Mermaid kann ER-Diagramme rendern
+
+erDiagramm KUNDE || --o{ BESTELLUNG : platziert  BESTELLUNG || --|{ POSITION :  enthält KUNDE }|..|{ LIEFERADRESSE :  verwendet
+       
+       
+       
+CUSTOMER
+ORDER
+LINE-ITEM
+DELIVERY-ADDRESS
+places
+contains
+uses
+Entitätsnamen werden oft groß geschrieben, obwohl es dafür keinen anerkannten Standard gibt und dies in Mermaid nicht erforderlich ist.
+
+Beziehungen zwischen Entitäten werden durch Linien mit Endmarkierungen dargestellt, die die Kardinalität darstellen. Meerjungfrau verwendet die beliebteste Krähenfußnotation. Der Krähenfuß vermittelt intuitiv die Möglichkeit vieler Instanzen der Entität, mit der er verbunden ist.
+
+ER-Diagramme können für verschiedene Zwecke verwendet werden, von abstrakten logischen Modellen ohne Implementierungsdetails bis hin zu physischen Modellen relationaler Datenbanktabellen. Es kann nützlich sein, Attributdefinitionen in ER-Diagramme aufzunehmen, um das Verständnis des Zwecks und der Bedeutung von Entitäten zu erleichtern. Diese müssen nicht unbedingt vollständig sein; Oft reicht eine kleine Teilmenge von Attributen aus. Meerjungfrauen lassen sich hinsichtlich ihres Typs und Namens definieren .
+
+erDiagram CUSTOMER || --o{ ORDER :  platziert CUSTOMER { string  name string  custNumber string  sector } ORDER ||--|{ LINE-ITEM :  contains ORDER { int  orderNumber string  deliveryAddress } LINE-ITEM { string  productCode int  Quantity float  pricePerUnit }
+       
+     
+        
+        
+        
+    
+       
+     
+        
+        
+    
+     
+        
+        
+        
+    
+CUSTOMER
+string
+name
+string
+custNumber
+string
+sector
+ORDER
+int
+orderNumber
+string
+deliveryAddress
+LINE-ITEM
+string
+productCode
+int
+quantity
+float
+pricePerUnit
+places
+contains
+Beim Einfügen von Attributen in ER-Diagramme müssen Sie entscheiden, ob Sie Fremdschlüssel als Attribute einschließen möchten. Dies hängt wahrscheinlich davon ab, wie genau Sie versuchen, relationale Tabellenstrukturen darzustellen. Wenn Ihr Diagramm ein logisches istModell, das keine relationale Implementierung implizieren soll, dann ist es besser, diese wegzulassen, da die assoziativen Beziehungen bereits die Art und Weise vermitteln, wie Entitäten assoziiert sind. Beispielsweise kann eine JSON-Datenstruktur mithilfe von Arrays eine Eins-zu-Viele-Beziehung implementieren, ohne dass Fremdschlüsseleigenschaften erforderlich sind. In ähnlicher Weise kann eine objektorientierte Programmiersprache Zeiger oder Verweise auf Sammlungen verwenden. Selbst bei Modellen, die für die relationale Implementierung vorgesehen sind, könnten Sie entscheiden, dass die Einbeziehung von Fremdschlüsselattributen bereits durch die Beziehungen dargestellte Informationen dupliziert und den Entitäten keine Bedeutung hinzufügt. Letztendlich ist es Ihre Wahl.
+
+Syntax
+Entitäten und Beziehungen
+Die Mermaid-Syntax für ER-Diagramme ist mit PlantUML kompatibel, mit einer Erweiterung zur Bezeichnung der Beziehung. Jede Anweisung besteht aus den folgenden Teilen:
+
+    <first-entity> [<relationship> <second-entity> : <relationship-label>]
+Woher:
+
+first-entityist der Name einer Entität. Namen müssen mit einem Buchstaben beginnen und dürfen auch Ziffern, Bindestriche und Unterstriche enthalten.
+relationshipbeschreibt die Art und Weise, wie beide Einheiten miteinander in Beziehung stehen. Siehe unten.
+second-entityist der Name der anderen Entität.
+relationship-labelbeschreibt die Beziehung aus der Perspektive der ersten Entität.
+Zum Beispiel:
+
+    PROPERTY ||--|{ ROOM : contains
+Diese Erklärung kann so gelesen werden, dass eine Immobilie einen oder mehrere Räume enthält und ein Raum Teil einer und nur einer Immobilie ist . Sie können sehen, dass die Beschriftung hier aus der Perspektive der ersten Entität stammt: Eine Eigenschaft enthält einen Raum, aber ein Raum enthält keine Eigenschaft. Aus der Perspektive der zweiten Entität betrachtet, lässt sich das äquivalente Etikett normalerweise sehr leicht ableiten. (Einige ER-Diagramme kennzeichnen Beziehungen aus beiden Perspektiven, aber dies wird hier nicht unterstützt und ist normalerweise überflüssig).
+
+Nur der first-entityTeil einer Erklärung ist obligatorisch. Dadurch ist es möglich, eine Entität ohne Beziehungen darzustellen, was bei der iterativen Konstruktion von Diagrammen hilfreich sein kann. Wenn andere Teile einer Anweisung angegeben sind, sind alle Teile obligatorisch.
+
+Beziehungssyntax
+Der relationshipTeil jeder Aussage kann in drei Unterkomponenten unterteilt werden:
+
+die Kardinalität der ersten Entität in Bezug auf die zweite,
+ob die Beziehung einer „untergeordneten“ Entität Identität verleiht
+die Kardinalität der zweiten Entität in Bezug auf die erste
+Kardinalität ist eine Eigenschaft, die beschreibt, wie viele Elemente einer anderen Entität mit der betreffenden Entität in Beziehung stehen können. Im obigen Beispiel PROPERTYkann a eine oder mehrere ROOMInstanzen zugeordnet sein, wohingegen a ROOMnur einer zugeordnet werden kann PROPERTY. In jedem Kardinalitätsmarker gibt es zwei Zeichen. Das äußerste Zeichen steht für einen Maximalwert und das innerste Zeichen für einen Minimalwert. Die folgende Tabelle fasst mögliche Kardinalitäten zusammen.
+
+Wert (links)	Wert (rechts)	Bedeutung
+|o	o|	Null oder eins
+||	||	Genau eine
+}o	o{	Null oder mehr (keine Obergrenze)
+}|	|{	Einer oder mehrere (keine Obergrenze)
+Identifikation
+Beziehungen können entweder als identifizierend oder nicht identifizierend klassifiziert werden und diese werden entweder mit durchgezogenen bzw. gestrichelten Linien wiedergegeben. Dies ist relevant, wenn eine der fraglichen Einheiten ohne die andere nicht unabhängig existieren kann. Beispielsweise muss eine Firma, die Personen für das Autofahren versichert, möglicherweise Daten auf NAMED-DRIVERs speichern. Bei der Modellierung könnten wir damit beginnen, zu beobachten, dass a CARvon vielen PERSONInstanzen gesteuert werden kann und a PERSONviele CARs steuern kann - beide Entitäten können ohne die andere existieren, also ist dies eine nicht identifizierende Beziehung, die wir in Mermaid wie folgt spezifizieren könnten:PERSON }|..|{ CAR : "driver". Beachten Sie die beiden Punkte in der Mitte der Beziehung, die dazu führen, dass eine gestrichelte Linie zwischen den beiden Entitäten gezeichnet wird. Aber wenn diese Viele-zu-Viele-Beziehung in zwei Eins-zu-Viele-Beziehungen aufgelöst wird, stellen wir fest, dass a NAMED-DRIVERnicht ohne a PERSONund a existieren kann CAR- die Beziehungen werden identifizierend und würden mit Bindestrichen angegeben, die zu einer durchgezogenen Linie führen:
+
+erDiagram CAR ||--o{ NAMED-DRIVER :  erlaubt PERSON ||--o{ NAMED-DRIVER :  is
+       
+       
+Attribute
+Attribute können für Entitäten definiert werden, indem der Name der Entität angegeben wird, gefolgt von einem Block, der mehrere type namePaare enthält, wobei ein Block durch ein öffnendes {und ein schließendes }. Zum Beispiel:
+
+erDiagram CAR ||--o{ NAMED-DRIVER :  erlaubt CAR { string  registrationNumber string  make string  model } PERSON ||--o{ NAMED-DRIVER :  is PERSON { string  firstName string  lastName int  age }
+       
+     
+        
+        
+        
+    
+       
+     
+        
+        
+        
+    
+CAR
+string
+registrationNumber
+string
+make
+string
+model
+NAMED-DRIVER
+PERSON
+string
+firstName
+string
+lastName
+int
+age
+allows
+is
+Die Attribute werden in den Entity-Boxen gerendert:
+
+erDiagram CAR ||--o{ NAMED-DRIVER :  erlaubt CAR { string  registrationNumber string  make string  model } PERSON ||--o{ NAMED-DRIVER :  is PERSON { string  firstName string  lastName int  age }
+       
+     
+        
+        
+        
+    
+       
+     
+        
+        
+        
+    
+CAR
+string
+registrationNumber
+string
+make
+string
+model
+NAMED-DRIVER
+PERSON
+string
+firstName
+string
+lastName
+int
+age
+allows
+is
+Die Werte typeund namemüssen mit einem Buchstaben beginnen und dürfen Ziffern, Bindestriche oder Unterstriche enthalten. Abgesehen davon gibt es keine Einschränkungen, und es gibt keinen impliziten Satz gültiger Datentypen.
+
+Attributschlüssel und Kommentare
+Für Attribute kann auch ein keyoder-Kommentar definiert sein. Schlüssel können "PK" oder "FK" für Primary Key oder Foreign Key sein. Und a commentwird durch doppelte Anführungszeichen am Ende eines Attributs definiert. Kommentare selbst dürfen keine doppelten Anführungszeichen enthalten.
+
+erDiagram CAR ||--o{ NAMED-DRIVER :  erlaubt CAR { string  allowDriver FK "Der Führerschein des erlaubten Fahrers" string  registrationNumber string  make string  model } PERSON ||--o{ NAMED-DRIVER :  is PERSON { string  driversLicense PK "Die Lizenznummer" string  firstName string  lastName int  age }
+       
+     
+          
+        
+        
+        
+    
+       
+     
+          
+        
+        
+        
+    
+CAR
+string
+allowedDriver
+FK
+The license of the allowed driver
+string
+registrationNumber
+string
+make
+string
+model
+NAMED-DRIVER
+PERSON
+string
+driversLicense
+PK
+The license #
+string
+firstName
+string
+lastName
+int
+age
+allows
+is
+Andere Dinge
+Wenn die Beziehungsbezeichnung aus mehr als einem Wort bestehen soll, müssen Sie den Ausdruck in doppelte Anführungszeichen setzen
+Wenn Sie überhaupt keine Bezeichnung für eine Beziehung wünschen, müssen Sie eine leere Zeichenfolge in doppelten Anführungszeichen verwenden
+Styling
+Konfigurationsoptionen
+Für eine einfache Farbanpassung:
+
+Name	Benutzt als
+fill	Hintergrundfarbe einer Entität oder eines Attributs
+stroke	Rahmenfarbe einer Entität oder eines Attributs, Linienfarbe einer Beziehung
+Klassen verwendet
+Die folgenden CSS-Klassenselektoren sind für ein reichhaltigeres Styling verfügbar:
+
+Wähler	Beschreibung
+.er.attributeBoxEven	Das Feld, das Attribute in Zeilen mit geraden Zahlen enthält
+.er.attributeBoxOdd	Das Feld, das Attribute in ungeradzahligen Zeilen enthält
+.er.entityBox	Die Box, die eine Entität darstellt
+.er.entityLabel	Die Bezeichnung für eine Entität
+.er.relationshipLabel	Das Etikett für eine Beziehung
+.er.relationshipLabelBox	Das Feld, das eine Beziehungsbezeichnung umgibt
+.er.relationshipLine	Die Linie, die eine Beziehung zwischen Entitäten darstellt
