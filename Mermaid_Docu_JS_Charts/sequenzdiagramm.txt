@@ -1,0 +1,533 @@
+Sequenzdiagramme
+Bearbeite diese Seite N|Fest
+
+Ein Sequenzdiagramm ist ein Interaktionsdiagramm, das zeigt, wie Prozesse miteinander operieren und in welcher Reihenfolge.
+
+Mermaid kann Sequenzdiagramme rendern.
+
+sequenceDiagram Alice ->> John :  Hallo John, wie geht es dir? John -->> Alice :  Großartig! Alice -) John :  Bis später!
+    
+    
+    
+Alice
+John
+Hello John, how are you?
+Great!
+See you later!
+Alice
+John
+A note on nodes, the word "end" could potentially break the diagram, due to the way that the mermaid language is scripted.
+
+If unavoidable, one must use parentheses(), quotation marks "", or brackets {},[], to enclose the word "end". i.e : (end), [end], {end}.
+Syntax
+Teilnehmer
+Die Teilnehmer können wie im ersten Beispiel auf dieser Seite implizit definiert werden. Die Teilnehmer oder Akteure werden in der Reihenfolge ihres Erscheinens im Diagrammquelltext gerendert. Manchmal möchten Sie die Teilnehmer vielleicht in einer anderen Reihenfolge als in der ersten Nachricht anzeigen. Es ist möglich, die Erscheinungsreihenfolge des Akteurs wie folgt festzulegen:
+
+SequenzDiagramm Teilnehmer Alice Teilnehmer Bob Alice ->> Bob :  Hallo Bob Bob ->> Alice :  Hallo Alice
+     
+     
+    
+    
+Alice
+Bob
+Hi Bob
+Hi Alice
+Alice
+Bob
+Schauspieler
+Wenn Sie ausdrücklich das Akteursymbol anstelle eines Rechtecks ​​mit Text verwenden möchten, können Sie dies tun, indem Sie die Akteuranweisungen wie unten beschrieben verwenden.
+
+SequenzDiagramm Schauspieler Alice Schauspieler Bob Alice ->> Bob :  Hallo Bob Bob ->> Alice :  Hallo Alice
+     
+     
+    
+    
+Alice
+Bob
+Hi Bob
+Hi Alice
+Alice
+Bob
+Aliase
+Der Akteur kann eine praktische Kennung und eine beschreibende Bezeichnung haben.
+
+Sequenzdiagramm Teilnehmer A als Alice Teilnehmer J als John A ->> J :  Hallo John, wie geht es dir? J ->> A :  Großartig!
+       
+       
+    
+    
+Alice
+John
+Hello John, how are you?
+Great!
+Alice
+John
+Mitteilungen
+Meldungen können entweder durchgezogen oder mit einer gepunkteten Linie angezeigt werden.
+
+[Actor][Arrow][Actor]:Message text
+Derzeit werden sechs Arten von Pfeilen unterstützt:
+
+Typ	Beschreibung
+->	Durchgezogene Linie ohne Pfeil
+-->	Gepunktete Linie ohne Pfeil
+->>	Durchgezogene Linie mit Pfeilspitze
+-->>	Gepunktete Linie mit Pfeilspitze
+-x	Durchgezogene Linie mit einem Kreuz am Ende
+--x	Gepunktete Linie mit einem Kreuz am Ende.
+-)	Durchgezogene Linie mit offenem Pfeil am Ende (asynchron)
+--)	Gepunktete Linie mit offenem Pfeil am Ende (asynchron)
+Aktivierungen
+Es ist möglich, einen Aktor zu aktivieren und zu deaktivieren. (De-)Aktivierung können dedizierte Erklärungen sein:
+
+sequenceDiagram Alice ->> John :  Hallo John, wie geht es dir? John John aktivieren -->> Alice :  Toll! Johannes deaktivieren
+    
+     
+    
+     
+Alice
+John
+Hello John, how are you?
+Great!
+Alice
+John
+Es gibt auch eine Abkürzungsnotation durch Anhängen +/ -Suffix an den Nachrichtenpfeil:
+
+sequenceDiagram Alice ->>+ John :  Hallo John, wie geht es dir? John -->>- Alice :  Großartig!
+    
+    
+Alice
+John
+Hello John, how are you?
+Great!
+Alice
+John
+Aktivierungen können für denselben Akteur gestapelt werden:
+
+sequenceDiagram Alice ->>+ John :  Hallo John, wie geht es dir? Alice ->>+ John :  John, kannst du mich hören? John -->>- Alice :  Hallo Alice, ich kann dich hören! John -->>- Alice :  Ich fühle mich großartig!
+    
+    
+    
+    
+Alice
+John
+Hello John, how are you?
+John, can you hear me?
+Hi Alice, I can hear you!
+I feel great!
+Alice
+John
+Anmerkungen
+Es ist möglich, Notizen zu einem Sequenzdiagramm hinzuzufügen. Dies geschieht durch die Notation Note [ rechts von | links von | über ] [Schauspieler]: Text im Notizinhalt
+
+Siehe das Beispiel unten:
+
+SequenzDiagramm Teilnehmer John Notiz rechts von John :  Text in Notiz
+     
+       
+John
+Text in note
+John
+Es ist auch möglich, Notizen zu erstellen, die sich über zwei Teilnehmer erstrecken:
+
+sequenceDiagram Alice -> John :  Hallo John, wie geht es dir? Anmerkung zu Alice , John :  Eine typische Interaktion
+    
+      
+Alice
+John
+Hello John, how are you?
+A typical interaction
+Alice
+John
+Schleifen
+Es ist möglich, Schleifen in einem Sequenzdiagramm auszudrücken. Dies geschieht durch die Notation
+
+loop Loop text
+... statements ...
+end
+Siehe das Beispiel unten:
+
+sequenceDiagram Alice -> John :  Hallo John, wie geht es dir? Schleife Jede Minute John --> Alice :  Großartig! Ende
+    
+      
+        
+    
+Alice
+John
+Hello John, how are you?
+Great!
+loop
+[Every minute]
+Alice
+John
+Alt
+Es ist möglich, alternative Pfade in einem Sequenzdiagramm auszudrücken. Dies geschieht durch die Notation
+
+alt Describing text
+... statements ...
+else
+... statements ...
+end
+oder wenn es eine optionale Sequenz gibt (wenn ohne else).
+
+opt Describing text
+... statements ...
+end
+Siehe das Beispiel unten:
+
+Sequenzdiagramm Alice ->> Bob :  Hallo Bob, wie geht es dir? alt ist krank Bob ->> Alice :  Nicht so gut : ( ansonsten geht es Bob gut ->> Alice :  Fühlt sich frisch an wie ein Gänseblümchen Ende opt Extra Antwort Bob ->> Alice :  Danke der Nachfrage Ende
+    
+      
+           
+      
+        
+    
+      
+        
+    
+Alice
+Bob
+Hello Bob, how are you?
+Not so good :(
+Feeling fresh like a daisy
+alt
+[is sick]
+[is well]
+Thanks for asking
+opt
+[Extra response]
+Alice
+Bob
+Parallel
+Es ist möglich, parallel ablaufende Aktionen anzuzeigen.
+
+Dies geschieht durch die Notation
+
+par [Action 1]
+... statements ...
+and [Action 2]
+... statements ...
+and [Action N]
+... statements ...
+end
+Siehe das Beispiel unten:
+
+Sequenzdiagramm von Alice zu Bob Alice ->> Bob :  Hallo Leute! und Alice zu John Alice ->> John :  Hallo Leute! Ende Bob -->> Alice :  Hallo Alice! John -->> Alice :  Hallo Alice!
+       
+        
+       
+        
+    
+    
+    
+Alice
+Bob
+John
+Hello guys!
+Hello guys!
+par
+[Alice to Bob]
+[Alice to John]
+Hi Alice!
+Hi Alice!
+Alice
+Bob
+John
+Es ist auch möglich, parallele Blöcke zu verschachteln.
+
+sequenceDiagram von Alice zu Bob Alice ->> Bob :  Geh John und Alice zu John helfen Alice - >> John :  Ich möchte, dass das heute erledigt wird von John zu Charlie John ->> Charlie :  Können wir das heute machen? und John an Diana John ->> Diana :  Können Sie uns heute helfen? ende ende
+       
+        
+       
+        
+           
+            
+           
+            
+        
+    
+Alice
+Bob
+John
+Charlie
+Diana
+Go help John
+I want this done today
+Can we do this today?
+Can you help us today?
+par
+[John to Charlie]
+[John to Diana]
+par
+[Alice to Bob]
+[Alice to John]
+Alice
+Bob
+John
+Charlie
+Diana
+Hintergrundhervorhebung
+Es ist möglich, Flüsse hervorzuheben, indem farbige Hintergrundrechtecke bereitgestellt werden. Dies geschieht durch die Notation
+
+Die Farben werden mit rgb- und rgba-Syntax definiert.
+
+rect rgb(0, 255, 0)
+... content ...
+end
+rect rgba(0, 0, 255, .1)
+... content ...
+end
+Siehe die folgenden Beispiele:
+
+Sequenzdiagramm Teilnehmer Alice Teilnehmer John
+     
+     
+
+    rect rgb (191, 223, 255)  rechts von Alice beachten :  Alice ruft John an. Alice ->>+ John :  Hallo John, wie geht es dir? rect rgb (200, 150, 255) Alice ->>+ John :  John, kannst du mich hören? John -->>- Alice :  Hallo Alice, ich kann dich hören! Ende John -->>- Alice :  Ich fühle mich großartig! Ende Alice ->>+ John :  Wolltest du heute Abend zum Spiel gehen? John -->>- Alice :
+       
+    
+     
+    
+    
+    
+    
+    
+      
+       Ja! Wir sehen uns dort.
+
+Alice
+John
+Alice calls John.
+Hello John, how are you?
+John, can you hear me?
+Hi Alice, I can hear you!
+I feel great!
+Did you want to go to the game tonight?
+Yeah! See you there.
+Alice
+John
+Bemerkungen
+Innerhalb eines Sequenzdiagramms können Kommentare eingetragen werden, die vom Parser ignoriert werden. Kommentare müssen in einer eigenen Zeile stehen und mit %%(doppelten Prozentzeichen) eingeleitet werden. Jeder Text nach dem Beginn des Kommentars bis zum nächsten Zeilenumbruch wird als Kommentar behandelt, einschließlich jeglicher Diagrammsyntax
+
+sequenceDiagram Alice ->> John :  Hallo John, wie geht es dir? %% das ist ein Kommentar John -->> Alice :  Großartig!
+    
+    
+    
+Entitätscodes zum Escapezeichen
+Es ist möglich, Zeichen mit der hier beispielhaft dargestellten Syntax zu maskieren.
+
+Sequenzdiagramm A ->> B :  I #9829; Sie! B ->> A :  I #9829; du #infin; mal mehr!
+    
+    
+A
+B
+I ♥ you!
+I ♥ you ∞ times more!
+A
+B
+Die angegebenen Zahlen sind zur Basis 10, #können also als kodiert werden #35;. Es wird auch unterstützt, HTML-Zeichennamen zu verwenden.
+
+Da Semikolons anstelle von Zeilenumbrüchen verwendet werden können, um das Markup zu definieren, müssen Sie verwenden #59;, um ein Semikolon in den Nachrichtentext aufzunehmen.
+
+Sequenznummern
+Es ist möglich, jedem Pfeil in einem Sequenzdiagramm eine Sequenznummer hinzuzufügen. Dies kann konfiguriert werden, wenn Meerjungfrauen wie unten gezeigt zur Website hinzugefügt werden:
+
+    <script>
+      mermaid.initialize({ sequence: { showSequenceNumbers: true }, });
+    </script>
+Es kann auch über den Diagrammcode wie im Diagramm eingeschaltet werden:
+
+sequenceDiagram autonumber Alice ->> John :  Hallo John, wie geht es dir? Schleife Gesundheitscheck John ->> John :  Kampf gegen Hypochondrie end Hinweis rechts von John :  Rationale Gedanken! John -->> Alice :  Großartig! John ->> Bob :  Und du? Bob -->> John :  Sehr gut!
+    
+    
+     
+        
+    
+       
+    
+    
+    
+Alice
+John
+Bob
+Hello John, how are you?
+1
+Fight against hypochondria
+2
+loop
+[Healthcheck]
+Rational thoughts!
+Great!
+3
+How about you?
+4
+Jolly good!
+5
+Alice
+John
+Bob
+Schauspieler-Menüs
+Akteure können Popup-Menüs mit individualisierten Links zu externen Seiten haben. Wenn beispielsweise ein Akteur einen Webdienst darstellt, könnten nützliche Links einen Link zum Dienstzustands-Dashboard, ein Repository mit dem Code für den Dienst oder eine Wiki-Seite, die den Dienst beschreibt, enthalten.
+
+Dies kann konfiguriert werden, indem eine oder mehrere Verbindungslinien mit dem Format hinzugefügt werden:
+
+link <actor>: <link-label> @ <link-url>
+sequenceDiagram Teilnehmer Alice Teilnehmer John Link  Alice :  Dashboard  @  https://dashboard.contoso.com/alice Link  Alice :  Wiki  @  https://wiki.contoso.com/alice Link  John :  Dashboard  @  https://dashboard.contoso. com/john link  John :  Wiki  @  https://wiki.contoso.com/john Alice ->> John :  Hallo John, wie geht es dir? John -->> Alice :  Großartig! Alice- )
+     
+     
+    
+    
+    
+    
+    
+    
+    Johannes :  Bis später!
+Erweiterte Menüsyntax
+Es gibt eine erweiterte Syntax, die auf der JSON-Formatierung basiert. Wenn Sie mit dem JSON-Format vertraut sind, gibt es dieses ebenfalls.
+
+Dies kann konfiguriert werden, indem die Verbindungszeilen mit dem Format hinzugefügt werden:
+
+links <actor>: <json-formatted link-name link-url pairs>
+Ein Beispiel ist unten:
+
+sequenceDiagram Teilnehmerin Alice Teilnehmerin John verlinkt  Alice :  { "Dashboard" :  "https://dashboard.contoso.com/alice" ,  "Wiki" :  "https://wiki.contoso.com/alice" } links  John :  { " Dashboard“ :  „https://dashboard.contoso.com/john“ ,  „Wiki“ :  „https://wiki.contoso.com/john“ } Alice ->> John :  Hallo John, wie geht es dir? Johannes -->> Alice :  Toll! Alice- )
+     
+     
+    
+    
+    
+    
+    Johannes :  Bis später!
+Alice
+John
+Hello John, how are you?
+Great!
+See you later!
+Alice
+John
+Dashboard
+Wiki
+Dashboard
+Wiki
+Styling
+Die Gestaltung eines Sequenzdiagramms erfolgt durch die Definition einer Reihe von CSS-Klassen. Während des Renderns werden diese Klassen aus der Datei extrahiert, die sich unter src/themes/sequence.scss befindet
+
+Klassen verwendet
+Klasse	Beschreibung
+Schauspieler	Stil für das Akteursfeld oben im Diagramm.
+Text.Schauspieler	Stile für Text im Akteursfeld oben im Diagramm.
+Schauspieler-Linie	Die vertikale Linie für einen Akteur.
+NachrichtZeile0	Stile für die durchgezogene Nachrichtenzeile.
+NachrichtZeile1	Stile für die gepunktete Nachrichtenzeile.
+Nachrichtentext	Definiert Stile für den Text auf den Nachrichtenpfeilen.
+LabelBox	Definiert die Stilbezeichnung nach links in einer Schleife.
+LabelText	Stile für den Text im Etikett für Schleifen.
+loopText	Stile für den Text im Loop-Feld.
+loopLine	Definiert Stile für die Linien in der Schleifenbox.
+Hinweis	Stile für das Notizfeld.
+AnmerkungText	Stile für den Text in den Notizfeldern.
+Muster-Stylesheet
+body {
+    background: white;
+}
+
+.actor {
+    stroke: #ccccff;
+    fill: #ececff;
+}
+text.actor {
+    fill: black;
+    stroke: none;
+    font-family: Helvetica;
+}
+
+.actor-line {
+    stroke: grey;
+}
+
+.messageLine0 {
+    stroke-width: 1.5;
+    stroke-dasharray: '2 2';
+    marker-end: 'url(#arrowhead)';
+    stroke: black;
+}
+
+.messageLine1 {
+    stroke-width: 1.5;
+    stroke-dasharray: '2 2';
+    stroke: black;
+}
+
+#arrowhead {
+    fill: black;
+}
+
+.messageText {
+    fill: black;
+    stroke: none;
+    font-family: 'trebuchet ms', verdana, arial;
+    font-size: 14px;
+}
+
+.labelBox {
+    stroke: #ccccff;
+    fill: #ececff;
+}
+
+.labelText {
+    fill: black;
+    stroke: none;
+    font-family: 'trebuchet ms', verdana, arial;
+}
+
+.loopText {
+    fill: black;
+    stroke: none;
+    font-family: 'trebuchet ms', verdana, arial;
+}
+
+.loopLine {
+    stroke-width: 2;
+    stroke-dasharray: '2 2';
+    marker-end: 'url(#arrowhead)';
+    stroke: #ccccff;
+}
+
+.note {
+    stroke: #decc93;
+    fill: #fff5ad;
+}
+
+.noteText {
+    fill: black;
+    stroke: none;
+    font-family: 'trebuchet ms', verdana, arial;
+    font-size: 14px;
+}
+Aufbau
+Ist es möglich, die Ränder zum Rendern des Sequenzdiagramms anzupassen?
+
+Dies erfolgt durch Definieren mermaid.sequenceConfigoder durch die CLI, um eine JSON-Datei mit der Konfiguration zu verwenden. Wie Sie die CLI verwenden, ist auf der Seite mermaidCLI beschrieben . mermaid.sequenceConfigkann mit Konfigurationsparametern oder dem entsprechenden Objekt auf einen JSON-String gesetzt werden.
+
+mermaid.sequenceConfig = {
+    diagramMarginX: 50,
+    diagramMarginY: 10,
+    boxTextMargin: 5,
+    noteMargin: 10,
+    messageMargin: 35,
+    mirrorActors: true
+};
+Mögliche Konfigurationsparameter:
+Parameter	Beschreibung	Standardwert
+SpiegelSchauspieler	Schaltet das Rendern von Akteuren sowohl unter als auch über dem Diagramm ein/aus	FALSCH
+bottomMarginAdj	Passt an, wie weit unten der Graph endete. Breite Rahmenstile mit CSS könnten unerwünschtes Clipping erzeugen, weshalb dieser Konfigurationsparameter existiert.	1
+actorFontSize	Legt die Schriftgröße für die Beschreibung des Akteurs fest	14
+SchauspielerSchriftfamilie	Legt die Schriftfamilie für die Beschreibung des Schauspielers fest	"Open Sans", serifenlos
+SchauspielerSchriftartGewicht	Legt die Schriftstärke für die Beschreibung des Akteurs fest	"Open Sans", serifenlos
+noteFontSize	Legt die Schriftgröße für mit Schauspielern verknüpfte Notizen fest	14
+noteFontFamily	Legt die Schriftfamilie für mit Schauspielern verbundene Notizen fest	"trebuchet ms", verdana, arial
+noteFontWeight	Legt die Schriftstärke für mit Schauspielern verknüpfte Notizen fest	"trebuchet ms", verdana, arial
+HinweisAusrichten	Legt die Textausrichtung für Text in mit Schauspielern verknüpften Notizen fest	Center
+messageFontSize	Legt die Schriftgröße für Akteur<->Akteur-Meldungen fest	16
+messageFontFamily	Legt die Schriftfamilie für Schauspieler<->Schauspieler-Meldungen fest	"trebuchet ms", verdana, arial
+NachrichtFontWeight	Legt die Schriftstärke für Akteur<->Akteur-Meldungen fest	"trebuchet ms", verdana, arial

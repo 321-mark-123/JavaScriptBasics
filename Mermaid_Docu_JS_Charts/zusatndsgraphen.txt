@@ -1,0 +1,246 @@
+Zustandsdiagramme
+„Ein Zustandsdiagramm ist eine Art von Diagramm, das in der Informatik und verwandten Gebieten verwendet wird, um das Verhalten von Systemen zu beschreiben. Zustandsdiagramme erfordern, dass das beschriebene System aus einer endlichen Anzahl von Zuständen besteht; manchmal ist dies tatsächlich der Fall, während andere Manchmal ist dies eine vernünftige Abstraktion." Wikipedia
+
+Mermaid kann Zustandsdiagramme rendern. Die Syntax versucht, mit der in plantUml verwendeten Syntax kompatibel zu sein, da dies es Benutzern erleichtert, Diagramme zwischen meerjungfrau und plantUml auszutauschen.
+
+stateDiagram-v2 [*] --> Still Still --> [*]
+      
+      
+
+    Still --> Moving   Moving --> Still Moving --> Crash Crash --> [*]
+      
+      
+      
+Still
+Moving
+Crash
+Ältere Renderings:
+
+Zustandsdiagramm [*] --> Still Still --> [*]
+      
+      
+
+    Still --> Moving   Moving --> Still Moving --> Crash Crash --> [*]
+      
+      
+      
+Still
+Moving
+Crash
+In Zustandsdiagrammen werden Systeme hinsichtlich ihrer Zustände beschrieben und wie der Systemzustand über Transitionen in einen anderen Zustand wechseln kann. Das obige Beispieldiagramm zeigt drei Zustände Still , Moving und Crash . Sie starten im Zustand Still. Von Still aus können Sie den Status in Moving ändern. In Moving können Sie den Zustand entweder zurück zu Still oder zu Crash ändern. Es gibt keinen Übergang von Still zu Crash.
+
+Zustände
+Ein Zustand kann auf mehrere Arten deklariert werden. Am einfachsten ist es, eine Zustands-ID als Beschreibung zu definieren.
+
+stateDiagram-v2 s1
+    
+s1
+Eine andere Möglichkeit besteht darin, das Schlüsselwort state mit einer Beschreibung wie unten zu verwenden:
+
+stateDiagram-v2 
+    state  „Dies ist eine Zustandsbeschreibung“ als s2  
+This is a state description
+Eine andere Möglichkeit, einen Status mit einer Beschreibung zu definieren, besteht darin, die Status-ID gefolgt von einem Doppelpunkt und der Beschreibung zu definieren:
+
+stateDiagram-v2 s2 :  Dies ist eine Zustandsbeschreibung
+     
+This is a state description
+Übergänge
+Übergänge sind Wege/Kanten, wenn ein Zustand in einen anderen übergeht. Dies wird durch den Textpfeil "-->" dargestellt.
+
+Wenn Sie einen Übergang zwischen zwei Zuständen definieren und die Zustände noch nicht definiert sind, werden die undefinierten Zustände mit der ID des Übergangs definiert. Sie können den so definierten Zuständen später Beschreibungen hinzufügen.
+
+stateDiagram-v2 s1 -> s2
+      
+s1
+s2
+Es ist möglich, einem Übergang Text hinzuzufügen. Um zu beschreiben, was es darstellt.
+
+stateDiagram-v2 s1 --> s2 :  Ein Übergang
+      
+A transition
+s1
+s2
+Anfang und Ende
+Es gibt zwei spezielle Zustände, die den Start und das Ende des Diagramms angeben. Diese werden mit der [*]-Syntax geschrieben und die Richtung des Übergangs darauf definiert entweder einen Start- oder einen Stoppzustand.
+
+stateDiagram-v2 [*] --> s1 s1 --> [*]
+      
+      
+s1
+Zusammengesetzte Zustände
+Bei der Verwendung von Zustandsdiagrammen in der realen Welt erhalten Sie häufig Diagramme, die mehrdimensional sind, da ein Zustand mehrere interne Zustände haben kann. Diese werden in dieser Terminologie zusammengesetzte Zustände genannt.
+
+Um einen zusammengesetzten Zustand zu definieren, müssen Sie das Schlüsselwort state gefolgt von einer ID und dem Hauptteil des zusammengesetzten Zustands zwischen {} verwenden. Siehe das Beispiel unten:
+
+stateDiagram-v2 [*] --> Erster Zustand Erster { [*] --> zweiter zweiter --> [*] }
+      
+      
+          
+          
+    
+First
+second
+Sie können dies in mehreren Ebenen tun:
+
+stateDiagram-v2 [*] --> Zuerst
+      
+
+    Zustand Erster {   [*] --> Zweiter
+          
+
+        Zustand Zweiter {   [*] --> Zweiter Zweiter --> Dritter
+              
+              
+
+            Zustand Dritter {   [*] --> dritter dritter --> [*] } } }
+                  
+                  
+            
+        
+    
+First
+Second
+second
+Third
+third
+Sie können auch Übergänge zwischen zusammengesetzten Zuständen definieren:
+
+stateDiagram-v2 [*] --> Erster Erster --> Zweiter Erster --> Dritter
+      
+      
+      
+
+    erster Zustand {   [*] --> fir fir --> [*] } zweiter Zustand { [*] --> sec sec --> [*] } dritter Zustand { [*] --> thi thi --> [*] }
+          
+          
+    
+      
+          
+          
+    
+      
+          
+          
+    
+First
+fir
+Second
+sec
+Third
+thi
+Sie können keine Übergänge zwischen internen Zuständen definieren, die zu verschiedenen zusammengesetzten Zuständen gehören
+
+Auswahl
+Manchmal müssen Sie eine Wahl zwischen zwei oder mehr Pfaden modellieren, Sie können dies mit <<choice>> tun.
+
+stateDiagram-v2 
+    state  if_state <<choice>>  [*] --> IsPositive IsPositive --> if_state if_state --> False :  if n < 0 if_state --> True :  if n >= 0
+      
+      
+      
+       
+if n < 0
+if n >= 0
+IsPositive
+False
+True
+Gabeln
+Mit <<fork>> <<join>> ist es möglich, einen Fork im Diagramm anzugeben.
+
+   stateDiagram-v2 
+    state  fork_state <<fork>>  [*] --> fork_state fork_state --> State2 fork_state --> State3
+        
+        
+        
+
+      state  join_state <<join>>  State2 --> join_state State3 --> join_state join_state --> State4 State4 --> [*]
+        
+        
+        
+        
+State2
+State3
+State4
+Anmerkungen
+Manchmal sagt es nichts besser als ein Post-it-Zettel. Dies ist auch in Zustandsdiagrammen der Fall.
+
+Hier können Sie wählen, ob Sie die Notiz rechts oder links von einem Knoten platzieren möchten.
+
+    stateDiagram-v2 State1 :  Der Zustand mit einer Notiz rechts von State1             Wichtige Information!             Sie können Notizen schreiben . Endnote State1 --> State2         Note links von State2 : Dies ist die Note  links.
+        
+        
+
+
+
+          
+            
+The state with a note
+Important information! You can write
+notes.
+State2
+This is the note to the left.
+Parallelität
+Wie in plantUml können Sie die Parallelität mit dem Symbol -- angeben.
+
+stateDiagram-v2 [*] --> Aktiv
+      
+
+    state Active {   [*] --> NumLockOff NumLockOff --> NumLockOn :  EvNumLockPressed NumLockOn --> NumLockOff :  EvNumLockPressed         -- [*] --> CapsLockOff CapsLockOff --> CapsLockOn :  EvCapsLockPressed CapsLockOn --> CapsLockOff :  EvCapsLockPressed         -- [ *] --> ScrollLockOff ScrollLockOff --> ScrollLockOn :  EvScrollLockPressed ScrollLockOn -->
+          
+           
+           
+
+          
+           
+           
+
+          
+           
+          ScrollLockOff :  EvScrollLockPressed  }
+    
+Active
+EvNumLockPressed
+EvNumLockPressed
+NumLockOff
+NumLockOn
+EvCapsLockPressed
+EvCapsLockPressed
+CapsLockOff
+CapsLockOn
+EvScrollLockPressed
+EvScrollLockPressed
+ScrollLockOff
+ScrollLockOn
+Richtung des Diagramms festlegen
+Bei Zustandsdiagrammen können Sie die Direction-Anweisung verwenden, um die Richtung festzulegen, die das Diagramm wie in diesem Beispiel darstellen soll.
+
+Zustandsdiagramm Richtung LR [*] --> A A --> B B --> C Zustand B { Richtung LR a --> b } B --> D
+     
+      
+      
+      
+      
+       
+        
+    
+      
+A
+B
+a
+b
+C
+D
+Bemerkungen
+Innerhalb eines Zustandsdiagramms können Kommentare eingetragen werden, die vom Parser ignoriert werden. Kommentare müssen in einer eigenen Zeile stehen und mit %%(doppelten Prozentzeichen) eingeleitet werden. Jeder Text nach dem Beginn des Kommentars bis zum nächsten Zeilenumbruch wird als Kommentar behandelt, einschließlich jeglicher Diagrammsyntax
+
+stateDiagram-v2 [*] --> Still Still --> [*] %% das ist ein Kommentar Still --> Moving Moving --> Still %% ein anderer Kommentar Moving --> Crash Crash --> [*]
+      
+      
+
+      
+       
+      
+      
+Styling
+Die Gestaltung eines Zustandsdiagramms erfolgt durch die Definition einer Reihe von CSS-Klassen. Während des Renderns werden diese Klassen aus der Datei extrahiert, die sich unter src/themes/state.scss befindet

@@ -1,0 +1,616 @@
+Klassendiagramme
+„In der Softwaretechnik ist ein Klassendiagramm in der Unified Modeling Language (UML) eine Art statisches Strukturdiagramm, das die Struktur eines Systems beschreibt, indem es die Klassen des Systems, ihre Attribute, Operationen (oder Methoden) und die Beziehungen zwischen Objekten zeigt ." Wikipedia
+
+Das Klassendiagramm ist der Hauptbaustein der objektorientierten Modellierung. Es wird für die allgemeine konzeptionelle Modellierung der Struktur der Anwendung und für die detaillierte Modellierung verwendet, indem die Modelle in Programmiercode übersetzt werden. Klassendiagramme können auch zur Datenmodellierung verwendet werden. Die Klassen in einem Klassendiagramm repräsentieren sowohl die Hauptelemente, Interaktionen in der Anwendung als auch die zu programmierenden Klassen.
+
+Mermaid kann Klassendiagramme rendern.
+
+ classDiagram Animal <|-- Duck Animal <|-- Fish Animal <|-- Zebra Animal : + int  age Animal : + String  gender Animal : + isMammal () Animal : + mate () class Duck { + String  beakColor + swim ( ) + Quacksalber () } Klasse Fisch { - int  sizeInFeet -
+        
+        
+        
+        
+        
+       
+       
+       
+          
+          
+          
+      
+       
+          
+          canEat () } class Zebra { + bool  ist _ wild + run () }
+      
+       
+          
+          
+      
+
+Animal
++int age
++String gender
++isMammal()
++mate()
+Duck
++String beakColor
++swim()
++quack()
+Fish
+-int sizeInFeet
+-canEat()
+Zebra
++bool is_wild
++run()
+Syntax
+Klasse
+UML bietet Mechanismen zur Darstellung von Klassenmitgliedern wie Attributen und Methoden sowie zusätzliche Informationen über sie. Eine einzelne Instanz einer Klasse im Diagramm enthält drei Abteilungen:
+
+Das obere Fach enthält den Namen der Klasse. Es wird fett und zentriert gedruckt, und der erste Buchstabe wird groß geschrieben. Es kann auch optionalen Anmerkungstext enthalten, der die Art der Klasse beschreibt.
+Das mittlere Fach enthält die Attribute der Klasse. Sie sind linksbündig ausgerichtet und der erste Buchstabe ist klein geschrieben.
+Das untere Fach enthält die Operationen, die die Klasse ausführen kann. Sie sind auch linksbündig und der erste Buchstabe ist klein geschrieben.
+classDiagram 
+    class  BankAccount BankAccount : + String  Eigentümer BankAccount : + Bigdecimal  balance BankAccount : + Einzahlung ( Betrag ) BankAccount : + Auszahlung ( Betrag )
+      
+      
+      
+      
+
+BankAccount
++String owner
++Bigdecimal balance
++deposit(amount)
++withdrawl(amount)
+Definiere eine Klasse
+Es gibt zwei Möglichkeiten, eine Klasse zu definieren:
+
+Explizites Definieren einer Klasse mit dem Schlüsselwort class like class Animal. Dies definiert die Animal-Klasse
+Definieren Sie zwei Klassen über eine Beziehung zwischen ihnen Vehicle <|-- Car. Dies definiert zwei Klassen Fahrzeug und Auto zusammen mit ihrer Beziehung.
+classDiagram 
+    Klasse  Tier Fahrzeug <|-- Auto
+      
+Animal
+Vehicle
+Car
+Namenskonvention: Ein Klassenname sollte aus alphanumerischen Zeichen (Unicode erlaubt) und Unterstrichen bestehen.
+
+Mitglieder einer Klasse definieren
+UML bietet Mechanismen zur Darstellung von Klassenmitgliedern wie Attributen und Methoden sowie zusätzliche Informationen über sie.
+
+Mermaid unterscheidet zwischen Attributen und Funktionen/Methoden basierend darauf, ob die Klammern () vorhanden sind oder nicht. Diejenigen mit ()werden als Funktionen/Methoden und andere als Attribute behandelt.
+
+Es gibt zwei Möglichkeiten, die Mitglieder einer Klasse zu definieren, und unabhängig davon, welche Syntax zum Definieren der Mitglieder verwendet wird, bleibt die Ausgabe gleich. Die zwei verschiedenen Wege sind:
+
+Ordnen Sie ein Mitglied einer Klasse zu, indem Sie : (Doppelpunkt) gefolgt vom Mitgliedsnamen verwenden, was nützlich ist, um jeweils ein Mitglied zu definieren. Zum Beispiel:
+ classDiagram 
+ class  BankAccount BankAccount : + String  Eigentümer BankAccount : + BigDecimal  balance BankAccount : + Einzahlung ( Betrag ) BankAccount : + Auszahlung ( Betrag )
+   
+   
+   
+   
+BankAccount
++String owner
++BigDecimal balance
++deposit(amount)
++withdrawal(amount)
+Ordnen Sie Mitglieder einer Klasse mithilfe von {} -Klammern zu, wobei Mitglieder in geschweiften Klammern gruppiert werden. Geeignet zum gleichzeitigen Definieren mehrerer Elemente. Zum Beispiel:
+classDiagram 
+class BankAccount {  + String  Eigentümer + BigDecimal  Guthaben + Einzahlung ( Betrag ) + Auszahlung ( Betrag ) }
+    
+    
+    
+    
+
+BankAccount
++String owner
++BigDecimal balance
++deposit(amount)
++withdrawl(amount)
+Rückgabetyp
+Optional können Sie die Methoden-/Funktionsdefinition mit dem Datentyp beenden, der zurückgegeben wird (Hinweis: Zwischen dem Ende )der Methodendefinition und dem Rückgabetyp muss ein Leerzeichen stehen. Beispiel:
+
+classDiagram 
+class BankAccount {  + String  Eigentümer + BigDecimal  Saldo + Einzahlung ( Betrag ) bool + Auszahlung ( Betrag ) int }
+    
+    
+     
+     
+
+BankAccount
++String owner
++BigDecimal balance
++deposit(amount) : bool
++withdrawl(amount) : int
+Generische Typen
+Mitglieder können mit generischen Typen definiert werden, z. B. List<int>für Felder, Parameter und Rückgabetypen, indem der Typ in ~( Tilde ) eingeschlossen wird. Hinweis: Verschachtelte Typdeklarationen (z. B. List<List<int>>) werden derzeit nicht unterstützt
+
+Dies kann als Teil einer der beiden Methoden zur Klassendefinition erfolgen:
+
+classDiagram 
+class Square ~ Shape ~{  int  id List ~ int ~ position setPoints ( List ~ int ~ points ) getPoints () List ~ int ~ }
+    
+     
+     
+     
+
+
+Quadrat : - Liste ~ Zeichenkette ~ Nachrichten    
+Quadrat : + setMessages ( Liste ~ Zeichenkette ~ Nachrichten )    
+Quadrat : + getMessages () Liste ~ Zeichenkette ~   
+Square<Shape>
+int id
+List<int> position
+-List<string> messages
+setPoints(List<int> points)
+getPoints() : List<int>
++setMessages(List<string> messages)
++getMessages() : List<string>
+Rückgabetyp
+Optional können Sie die Methoden-/Funktionsdefinition mit dem Datentyp abschließen, der zurückgegeben wird
+
+Sichtweite
+Um die Sichtbarkeit eines Klassenmitglieds (dh jedes Attributs oder jeder Methode) anzugeben, können diese Notationen vor dem Namen des Mitglieds platziert werden, aber es ist optional:
+
++Öffentlich
+-Privat
+#Geschützt
+~Paket/Intern
+Beachten Sie, dass Sie einer Methodendefinition auch zusätzliche Klassifikatoren hinzufügen können , indem Sie die folgenden Notationen am Ende der Methode hinzufügen, dh: nach dem ():
+
+*Zusammenfassung zB:someAbstractMethod()*
+$Statisch zB:someStaticMethod()$
+Beachten Sie, dass Sie einer Felddefinition auch zusätzliche Klassifikatoren hinzufügen können, indem Sie die folgenden Notationen am Ende des Feldnamens hinzufügen:
+
+$Statisch zB:String someField$
+Beziehung definieren
+Eine Beziehung ist ein allgemeiner Begriff, der die spezifischen Arten von logischen Verbindungen abdeckt, die in Klassen- und Objektdiagrammen zu finden sind.
+
+[classA][Arrow][ClassB]
+Es gibt verschiedene Arten von Beziehungen, die für Klassen unter UML definiert sind und derzeit unterstützt werden:
+
+Typ	Beschreibung
+<|--	Nachlass
+*--	Komposition
+Ö--	Anhäufung
+-->	Verband
+--	Verknüpfung (durchgehend)
+..>	Abhängigkeit
+..|>	Realisierung
+..	Verknüpfung (gestrichelt)
+classDiagram classA 
+< |-- classB   
+classC *-- classD   
+classE  o -- classF  
+classG <-- classH   
+classI -- classJ   
+classK <.. classL   
+classM <|.. classN   
+classO .. classP  
+
+classA
+classB
+classC
+classD
+classE
+classF
+classG
+classH
+classI
+classJ
+classK
+classL
+classM
+classN
+classO
+classP
+Wir können die Bezeichnungen verwenden, um die Art der Beziehung zwischen zwei Klassen zu beschreiben. Pfeilspitzen können auch in entgegengesetzte Richtungen verwendet werden:
+
+classDiagram classA 
+-- |>  classB  :  Vererbung  
+classC --*  classD  :  Zusammensetzung  
+classE --o  classF  :  Aggregation  
+classG -->  classH  :  Assoziation  
+classI --  classJ  :  Link(Solid)  
+classK ..>  classL  :  Abhängigkeit  
+classM ..| >  classN  :  Realisierung  
+classO ..  classP  :  Link(gestrichelt) 
+
+Inheritance
+Composition
+Aggregation
+Association
+Link(Solid)
+Dependency
+Realization
+Link(Dashed)
+classA
+classB
+classC
+classD
+classE
+classF
+classG
+classH
+classI
+classJ
+classK
+classL
+classM
+classN
+classO
+classP
+Etiketten auf Beziehungen
+Es ist möglich, einer Relation einen Beschriftungstext hinzuzufügen:
+
+[classA][Arrow][ClassB]:LabelText
+ Klassendiagramm  classA <|-- 
+classB :  implementiert  
+classC *--   classD  :  Zusammensetzung  classE   o -- 
+classF :  Assoziation
+implements
+composition
+association
+classA
+classB
+classC
+classD
+classE
+classF
+Zweiseitige Beziehungen
+Beziehungen können auf verschiedene Arten verlaufen:
+
+classDiagram Tier <|--|> Zebra
+      
+Hier ist die Syntax:
+
+[Relation Type][Link][Relation Type]
+Wo Relation Typekann einer sein:
+
+Typ	Beschreibung
+<|	Nachlass
+*	Komposition
+Ö	Anhäufung
+>	Verband
+<	Verband
+|>	Realisierung
+Und Linkkann einer sein von:
+
+Typ	Beschreibung
+--	Fest
+..	Gestrichelt
+Kardinalität / Multiplizität auf Relationen
+Multiplizität oder Kardinalität in Klassendiagrammen gibt die Anzahl der Instanzen einer Klasse an, die mit einer Instanz der anderen Klasse verknüpft sind. Beispielsweise hat ein Unternehmen einen oder mehrere Mitarbeiter, aber jeder Mitarbeiter arbeitet nur für ein Unternehmen.
+
+Multiplizitätsnotationen werden in der Nähe der Enden einer Assoziation platziert.
+
+Die verschiedenen Kardinalitätsoptionen sind:
+
+1Nur 1
+0..1Null oder Eins
+1..*Ein oder mehr
+*Viele
+nn {wobei n>1}
+0..nnull bis n {wobei n>1}
+1..neins bis n {wobei n>1}
+Die Kardinalität kann einfach definiert werden, indem der Kardinalitätstext in Anführungszeichen "vor (optional) und nach (optional) einem bestimmten Pfeil gesetzt wird.
+
+[classA] "cardinality1" [Arrow] "cardinality2" [ClassB]:LabelText
+classDiagram Kunde "1" --> "*" Ticket Student "1" --> "1..*" Course Galaxy --> "many" Star : Enthält
+        
+        
+         
+1
+*
+1
+1..*
+Contains
+many
+Customer
+Ticket
+Student
+Course
+Galaxy
+Star
+Anmerkungen zu Klassen
+Es ist möglich, Klassen mit einem bestimmten Markierungstext zu versehen, der wie Metadaten für die Klasse ist und einen klaren Hinweis auf ihre Art gibt. Einige gängige Beispiele für Anmerkungen könnten sein:
+
+<<Interface>>Zur Darstellung einer Interface-Klasse
+<<abstract>>Zur Darstellung einer abstrakten Klasse
+<<Service>>Um eine Serviceklasse darzustellen
+<<enumeration>>Um eine Aufzählung darzustellen
+Anmerkungen werden innerhalb der öffnenden <<und schließenden definiert >>. Es gibt zwei Möglichkeiten, einer Klasse eine Anmerkung hinzuzufügen, und unabhängig von der verwendeten Syntax ist die Ausgabe gleich. Die zwei Wege sind:
+
+In einer separaten Zeile danach wird eine Klasse definiert. Zum Beispiel:
+classDiagram 
+class  Shape 
+<< Schnittstelle >> Shape  
+Shape : noOfVertices   
+Shape : draw ()  
+«interface»
+Shape
+noOfVertices
+draw()
+In einer verschachtelten Struktur zusammen mit der Klassendefinition. Zum Beispiel:
+classDiagram 
+class Shape {  << interface >> noOfVertices draw () } class Color { << Aufzählung >> ROT BLAU GRÜN WEISS SCHWARZ }
+    
+    
+    
+
+ 
+    
+    
+    
+    
+    
+    
+
+
+«interface»
+Shape
+noOfVertices
+draw()
+«enumeration»
+Color
+RED
+BLUE
+GREEN
+WHITE
+BLACK
+Bemerkungen
+Innerhalb eines Klassendiagramms können Kommentare eingetragen werden, die vom Parser ignoriert werden. Kommentare müssen in einer eigenen Zeile stehen und mit %%(doppelten Prozentzeichen) eingeleitet werden. Jeder Text nach dem Beginn des Kommentars bis zum nächsten Zeilenumbruch wird als Kommentar behandelt, einschließlich jeglicher Klassendiagrammsyntax
+
+classDiagram 
+%% Diese ganze Zeile ist ein Kommentar classDiagram class  Shape <<interface>> 
+class Shape {  << interface >> noOfVertices draw () }
+    
+    
+    
+
+
+Richtung des Diagramms festlegen
+Bei Klassendiagrammen können Sie die Richtungsangabe verwenden, um die Richtung festzulegen, in die das Diagramm wie in diesem Beispiel gerendert wird.
+
+classDiagram direction  RL class Student { - idCard : IdCard } class IdCard { - id : int - name : string } class Fahrrad { - id : int - name : string } Student "1" --o "1" IdCard : carrys Student " 1" --o "1" Fahrrad : Fahrten
+  
+    
+      
+  
+   
+      
+      
+  
+   
+      
+      
+  
+        
+        
+carries
+1
+1
+rides
+1
+1
+Student
+-idCard : IdCard
+IdCard
+-id : int
+-name : string
+Bike
+-id : int
+-name : string
+Interaktion
+Es ist möglich, ein Klickereignis an einen Knoten zu binden, der Klick kann entweder zu einem Javascript-Callback oder zu einem Link führen, der in einem neuen Browser-Tab geöffnet wird. Hinweis : Diese Funktion ist bei Verwendung deaktiviert securityLevel='strict'und bei Verwendung von aktiviert securityLevel='loose'.
+
+Sie würden diese Aktionen in einer separaten Zeile definieren, nachdem alle Klassen deklariert wurden.
+
+action className "reference" "tooltip"
+click className call callback() "tooltip"
+click className href "url" "tooltip"
+Aktion ist entweder linkoder callback, je nachdem, welche Art von Interaktion Sie aufgerufen haben möchten
+Klassenname ist die ID des Knotens, dem die Aktion zugeordnet wird
+Referenz ist entweder der URL-Link oder der Funktionsname für den Rückruf.
+( optional ) tooltip ist eine Zeichenfolge, die angezeigt wird, wenn man mit der Maus über das Element fährt (Hinweis: Die Stile des Tooltip werden von der Klasse .mermaidTooltip festgelegt.)
+Hinweis: Die Callback-Funktion wird mit der nodeId als Parameter aufgerufen.
+Beispiele
+URL-Link:
+
+classDiagram 
+class  Shape 
+link  Shape "http://www.github.com" "Dies ist ein Tooltip für einen Link"   
+class  Shape2 
+click  Shape 2  href "http://www.github.com" "Dies ist ein Tooltip für einen Link "  
+Rückrufen:
+
+classDiagram 
+class  Shape 
+callback  Shape "callbackFunction" "Dies ist ein Tooltip für einen Callback"   
+class  Shape2 
+click  Shape 2  call  callbackFunction () "Dies ist ein Tooltip für einen Callback" 
+<script>
+    var callbackFunction = function(){
+        alert('A callback was triggered');
+    }
+<script>
+Class01
+Class02
+Class03
+Class04
+Erfolg Die Tooltip-Funktionalität und die Möglichkeit, auf URLs zu verlinken, sind ab Version 0.5.2 verfügbar.
+
+Anfängertipp, ein vollständiges Beispiel mit interaktiven Links in einem HTML-Kontext:
+
+<body>
+  <div class="mermaid">
+    classDiagram
+    Animal <|-- Duck
+    Animal <|-- Fish
+    Animal <|-- Zebra
+    Animal : +int age
+    Animal : +String gender
+    Animal: +isMammal()
+    Animal: +mate()
+    class Duck{
+      +String beakColor
+      +swim()
+      +quack()
+      }
+    class Fish{
+      -int sizeInFeet
+      -canEat()
+      }
+    class Zebra{
+      +bool is_wild
+      +run()
+      }
+
+      callback Duck callback "Tooltip"
+      link Zebra "http://www.github.com" "This is a link"
+  </div>
+
+  <script>
+    var callback = function(){
+        alert('A callback was triggered');
+    }
+    var config = {
+      startOnLoad:true,
+      securityLevel:'loose',
+    };
+
+    mermaid.initialize(config);
+  </script>
+</body>
+Styling
+Einen Knoten gestalten
+Es ist möglich, einzelnen Knoten bestimmte Stile wie einen dickeren Rahmen oder eine andere Hintergrundfarbe zuzuweisen. Dies geschieht durch Vordefinieren von Klassen in CSS-Stilen, die von der Diagrammdefinition wie im folgenden Beispiel angewendet werden können:
+
+<style>
+    .cssClass > rect{
+        fill:#FF0000;
+        stroke:#FFFF00;
+        stroke-width:4px;
+    }
+</style>
+Dann fügen Sie diese Klasse wie unten beschrieben an einen bestimmten Knoten an:
+
+    cssClass "nodeId1" cssClass;
+Es ist auch möglich, eine Klasse in einer Anweisung an eine Liste von Knoten anzuhängen:
+
+    cssClass "nodeId1,nodeId2" cssClass;
+Eine kürzere Form zum Hinzufügen einer Klasse besteht darin, den Klassennamen mit dem folgenden Operator an den Knoten anzuhängen ::::
+
+Klassendiagramm 
+    Klasse  Tier ::: cssClass
+Oder:
+
+Klassendiagramm Klasse Tier ::: cssClass { - int  sizeInFeet - canEat () }
+      
+        
+        
+    
+cssClasses können mit dieser Kurzformmethode nicht gleichzeitig mit einer relation-Anweisung hinzugefügt werden.
+
+Aufgrund von Einschränkungen bei vorhandenem Markup für Klassendiagramme ist es derzeit nicht möglich, CSS-Klassen innerhalb des Diagramms selbst zu definieren. Kommt bald!
+
+Standardstile
+Das Hauptdesign des Klassendiagramms erfolgt mit einer voreingestellten Anzahl von CSS-Klassen. Während des Renderns werden diese Klassen aus der Datei extrahiert, die sich unter src/themes/class.scss befindet. Die hier verwendeten Klassen werden im Folgenden beschrieben:
+
+Klasse	Beschreibung
+g.classGroup-Text	Stile für allgemeinen Unterrichtstext
+Klassengruppe .title	Stile für allgemeine Klassentitel
+g.classGroup rect	Stile für das Rechteck des Klassendiagramms
+g.classGroup-Zeile	Stile für Klassendiagrammlinien
+.classLabel .box	Stile für das Klassenetikettenfeld
+.classLabel .label	Stile für Klassenbeschriftungstext
+Komposition	Stile für Kompositionspfeilspitze und Pfeillinie
+Anhäufung	Stile für Aggregationspfeilspitze und Pfeillinie (gestrichelt oder durchgezogen)
+Abhängigkeit	Stile für Abhängigkeitspfeilspitze und Pfeillinie
+Muster-Stylesheet
+body {
+    background: white;
+}
+
+g.classGroup text {
+    fill: $nodeBorder;
+    stroke: none;
+    font-family: 'trebuchet ms', verdana, arial;
+    font-family: var(--mermaid-font-family);
+    font-size: 10px;
+
+    .title {
+        font-weight: bolder;
+    }
+}
+
+g.classGroup rect {
+    fill: $nodeBkg;
+    stroke: $nodeBorder;
+}
+
+g.classGroup line {
+    stroke: $nodeBorder;
+    stroke-width: 1;
+}
+
+.classLabel .box {
+    stroke: none;
+    stroke-width: 0;
+    fill: $nodeBkg;
+    opacity: 0.5;
+}
+
+.classLabel .label {
+    fill: $nodeBorder;
+    font-size: 10px;
+}
+
+.relation {
+    stroke: $nodeBorder;
+    stroke-width: 1;
+    fill: none;
+}
+
+@mixin composition {
+    fill: $nodeBorder;
+    stroke: $nodeBorder;
+    stroke-width: 1;
+}
+
+#compositionStart {
+    @include composition;
+}
+
+#compositionEnd {
+    @include composition;
+}
+
+@mixin aggregation {
+    fill: $nodeBkg;
+    stroke: $nodeBorder;
+    stroke-width: 1;
+}
+
+#aggregationStart {
+    @include aggregation;
+}
+
+#aggregationEnd {
+    @include aggregation;
+}
+
+#dependencyStart {
+    @include composition;
+}
+
+#dependencyEnd {
+    @include composition;
+}
+
+#extensionStart {
+    @include composition;
+}
+
+#extensionEnd {
+    @include composition;
+}
