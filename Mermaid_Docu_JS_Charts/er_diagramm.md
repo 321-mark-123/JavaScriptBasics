@@ -16,5 +16,4 @@ erDiagram
         string comment
     
     }
-
 ```
